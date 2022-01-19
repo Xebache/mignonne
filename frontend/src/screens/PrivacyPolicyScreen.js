@@ -34,9 +34,7 @@ function PrivacyPolicyScreen() {
               <ul>
                 <li>
                   <div>
-                    <H3>
-                      When you place an order online
-                    </H3>
+                    <H3>When you place an order online</H3>
                     <P>
                       We will gather all the information we need to process your
                       order (for example: name, email, postal address, biling
@@ -64,16 +62,12 @@ function PrivacyPolicyScreen() {
                     <H3>
                       When you choose to receive marketing communication from us
                     </H3>
-                    <P>
-                      Using an online form (contact, newsletter)
-                    </P>
+                    <P>Using an online form (contact, newsletter)</P>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <H3>
-                      When you first sign up for emails
-                    </H3>
+                    <H3>When you first sign up for emails</H3>
                     <P>
                       You can unsubscribe from the newsletter at any time by
                       clicking the unsubscribe link at the bottom of any email
@@ -83,9 +77,7 @@ function PrivacyPolicyScreen() {
                 </li>
                 <li>
                   <div>
-                    <H3>
-                      When you contact customer services
-                    </H3>
+                    <H3>When you contact customer services</H3>
                     <P>
                       We keep records of any communication we have with you so
                       that we are able to offer you the best service. By doing
@@ -96,9 +88,7 @@ function PrivacyPolicyScreen() {
                 </li>
                 <li>
                   <div>
-                    <H3>
-                      Using cookies in our website
-                    </H3>
+                    <H3>Using cookies in our website</H3>
                     <P>
                       See the cookie policy for details about cookie and how we
                       use them.
@@ -142,12 +132,8 @@ function PrivacyPolicyScreen() {
                   brand through the sending of newsletters and special offers
                   based on the customer's preference as observed on the website.
                 </Li>
-                <Li>
-                  Improving the personalisation of the service provided
-                </Li>
-                <Li>
-                  Compliance with legal and statutory obligations
-                </Li>
+                <Li>Improving the personalisation of the service provided</Li>
+                <Li>Compliance with legal and statutory obligations</Li>
               </ul>
               <P className="my-2">
                 All the data gathered for statistical and business purposes is
@@ -163,9 +149,7 @@ function PrivacyPolicyScreen() {
           className="d-flex justify-content-between align-items-start"
         >
           <div className="ms-2 me-auto">
-            <H2>
-              To who will your personnal data be communicated ?
-            </H2>
+            <H2>To who will your personnal data be communicated ?</H2>
             <div className="my-2">
               <P>
                 Your personnal data will not be disclosed to any third party,

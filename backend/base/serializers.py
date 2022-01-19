@@ -25,6 +25,8 @@ class ProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True, read_only=True)
     category = serializers.StringRelatedField()
     collection = serializers.StringRelatedField()
+
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'images', 'category', 'collection', 'createdAt', 'inStock']
+        fields = ['id', 'name', 'description', 'price', 'images',
+                  'category', 'collection', 'createdAt', 'inStock']

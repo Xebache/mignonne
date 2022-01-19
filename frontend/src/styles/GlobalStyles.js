@@ -20,4 +20,4 @@ const Li = styled.li`
   font-weight: 300;
 `;
 
-export { H2, H3, P, Li }
+export { H2, H3, P, Li };

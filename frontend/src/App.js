@@ -16,10 +16,25 @@ function App() {
       <main className="py-3">
         <Container>
           <Routes>
-            <Route path="/" element={<HomeScreen />} exact />
-            <Route path="/product/:id" element={<ProductScreen/>}/>
-            <Route path="privacy-policy" element={<PrivacyPolicyScreen />} exact />
-            <Route path="terms-and-conditions" element={<TermsAndConditionsScreen />} exact />
+            <Route 
+              path="/" 
+              element={<HomeScreen />} 
+              exact 
+            />
+            <Route 
+              path="/product/:id" 
+              element={<ProductScreen />} 
+            />
+            <Route
+              path="privacy-policy"
+              element={<PrivacyPolicyScreen />}
+              exact
+            />
+            <Route
+              path="terms-and-conditions"
+              element={<TermsAndConditionsScreen />}
+              exact
+            />
           </Routes>
         </Container>
       </main>
@@ -29,4 +44,3 @@ function App() {
 }
 
 export default App;
-

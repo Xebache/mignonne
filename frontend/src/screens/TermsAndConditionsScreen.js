@@ -1,12 +1,8 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container'
+import React from "react";
+import Container from "react-bootstrap/Container";
 
 function TermsAndConditionsScreen() {
-    return (
-        <Container>
-            
-        </Container>
-    )
+  return <Container></Container>;
 }
 
-export default TermsAndConditionsScreen
+export default TermsAndConditionsScreen;

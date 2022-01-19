@@ -20,10 +20,14 @@ function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <LinkContainer to="/cart">
-                <Nav.Link><BagIcon /></Nav.Link>
+                <Nav.Link>
+                  <BagIcon />
+                </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/login">
-                <Nav.Link><UserIcon /></Nav.Link>
+                <Nav.Link>
+                  <UserIcon />
+                </Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

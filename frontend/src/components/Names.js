@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-
 const Letter = styled.path`
   fill: none;
   stroke: #4f4f4f;

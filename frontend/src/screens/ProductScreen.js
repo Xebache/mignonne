@@ -19,7 +19,7 @@ function ProductScreen() {
     async function fetchProduct() {
       const { data } = await axios.get(`/api/products/${urlParam.id}`);
       setProduct(data);
-      setMainImagePath(data.images.find(i => i.isMain).path)
+      setMainImagePath(data.images.find((i) => i.isMain).path);
     }
     fetchProduct();
   }, [urlParam]);
