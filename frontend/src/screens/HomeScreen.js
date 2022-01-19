@@ -22,7 +22,7 @@ function HomeScreen() {
         {products.map((product) => (
           <Col
             className="d-flex justify-content-center"
-            key={product._id}
+            key={product.id}
             sm={12}
             md={6}
             lg={4}

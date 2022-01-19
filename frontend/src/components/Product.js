@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 function Product({ product }) {
   return (
     <Card border="light" className='my-3 p-3' style={{ height: "17.5rem", width: "15rem" }}>
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/product/${product.id}`}>
         <Card.Img src={product.image} />
       </Link>
       <Card.Body>
         <Link
-          to={`/product/${product._id}`}
+          to={`/product/${product.id}`}
           style={{ textDecoration: "none", color: "#000000" }}
         >
           <Card.Title className='d-flex justify-content-end text-nowrap' style={{fontWeight:"300", fontSize:"1em"}}>
