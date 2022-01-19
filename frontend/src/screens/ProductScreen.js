@@ -58,7 +58,7 @@ function ProductScreen() {
               <ListGroup horizontal className="d-flex justify-content-center">
                 <ListGroup.Item style={{ border: "none" }}>
                   <Image
-                    src={`${process.env.PUBLIC_URL}/icons/pinterest.png`}
+                    src={`${process.env.PUBLIC_URL}/icons/pinterest.svg`}
                     style={{
                       height: "1rem",
                       borderRadius: "50%",
@@ -68,7 +68,7 @@ function ProductScreen() {
                 </ListGroup.Item>
                 <ListGroup.Item style={{ border: "none" }}>
                   <Image
-                    src={`${process.env.PUBLIC_URL}/icons/facebook.png`}
+                    src={`${process.env.PUBLIC_URL}/icons/facebook.svg`}
                     style={{
                       height: "1rem",
                       borderRadius: "50%",
