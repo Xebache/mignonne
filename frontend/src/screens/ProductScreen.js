@@ -13,11 +13,13 @@ function ProductScreen() {
   const urlParam = useParams();
 
   const [product, setProduct] = useState([]);
+  const [mainImagePath, setMainImagePath] = useState([]);
 
   useEffect(() => {
     async function fetchProduct() {
       const { data } = await axios.get(`/api/products/${urlParam.id}`);
       setProduct(data);
+      setMainImagePath(data.images.find(i => i.isMain).path)
     }
     fetchProduct();
   }, [urlParam]);
@@ -29,7 +31,7 @@ function ProductScreen() {
       </Link>
       <Row>
         <Col md={7} className="text-center">
-          <Image src={product.image} alt={product.name} fluid />
+          <Image src={mainImagePath} alt={product.name} fluid />
         </Col>
         <Col md={5}>
           <ListGroup variant="flush">

@@ -33,10 +33,14 @@ class Product(models.Model):
 
 
 class Image(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.SET_NULL, null=True)
     path = models.ImageField(null=True, blank=True)
     isMain = models.BooleanField(default=True, null=False, blank=False)
     id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self) -> str:
+        return str(self.path)
+
 
 
 class Order(models.Model):

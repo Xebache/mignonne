@@ -3,10 +3,12 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom'
 
 function Product({ product }) {
+  const mainImagePath = product.images.find(i => i.isMain).path
+
   return (
     <Card border="light" className='my-3 p-3' style={{ height: "17.5rem", width: "15rem" }}>
       <Link to={`/product/${product.id}`}>
-        <Card.Img src={product.image} />
+        <Card.Img src={mainImagePath} />
       </Link>
       <Card.Body>
         <Link
@@ -17,7 +19,7 @@ function Product({ product }) {
             {product.name}
           </Card.Title>
           <Card.Text className='text-muted d-flex justify-content-end'>
-            {product.price} €
+            {product.price === Math.floor(product.price) ? product.price : parseInt(product.price)} €
           </Card.Text>
         </Link>
       </Card.Body>
