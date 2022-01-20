@@ -1,12 +1,8 @@
-import React from 'react'
-import { Alert } from 'react-bootstrap'
+import React from "react";
+import { Alert } from "react-bootstrap";
 
 function Error({ variant, children }) {
-    return (
-        <Alert variant={ variant }>
-            { children }
-        </Alert>
-    )
+  return <Alert variant={variant}>{children}</Alert>;
 }
 
-export default Error
+export default Error;

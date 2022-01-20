@@ -59,7 +59,7 @@ function ProductScreen() {
                 <h5>
                   {product.price === Math.floor(product.price)
                     ? product.price
-                    : parseInt(product.price)}{' '}
+                    : parseInt(product.price)}{" "}
                   €
                 </h5>
               </ListGroup.Item>

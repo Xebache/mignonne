@@ -1,22 +1,22 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import ListGroup from 'react-bootstrap/ListGroup';
-import { H2, H3, P, Li } from '../styles/GlobalStyles';
+import React from "react";
+import Container from "react-bootstrap/Container";
+import ListGroup from "react-bootstrap/ListGroup";
+import { H2, H3, P, Li } from "../styles/GlobalStyles";
 
 function PrivacyPolicyScreen() {
   return (
     <Container>
-      <ListGroup as='ol' numbered variant='flush'>
+      <ListGroup as="ol" numbered variant="flush">
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>
               Who is responsible for the processing of your personnal data ?
             </H2>
-            <div className='my-2'>
-              <ul style={{ listStyle: 'none' }}>
+            <div className="my-2">
+              <ul style={{ listStyle: "none" }}>
                 <Li>adress</Li>
                 <Li>phone number</Li>
                 <Li>email</Li>
@@ -25,12 +25,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>How do we collect information ?</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <ul>
                 <li>
                   <div>
@@ -100,12 +100,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>How long will we keep your data ?</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <Li>
                 You data will be kept as long as we have a contractual
                 relationship or until you request its cancelation, as well as
@@ -115,12 +115,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>Why is your personnal data collected ?</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <ul>
                 <Li>Managing orders and dealing with you</Li>
                 <Li>
@@ -135,7 +135,7 @@ function PrivacyPolicyScreen() {
                 <Li>Improving the personalisation of the service provided</Li>
                 <Li>Compliance with legal and statutory obligations</Li>
               </ul>
-              <P className='my-2'>
+              <P className="my-2">
                 All the data gathered for statistical and business purposes is
                 used to optimize the website and the customer's experience. The
                 customer has a right to access, rectify and oppose his personnal
@@ -145,12 +145,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>To who will your personnal data be communicated ?</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <P>
                 Your personnal data will not be disclosed to any third party,
                 except to those whose intervention is necessary for the correct
@@ -165,12 +165,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>What are you rights regarding your data ?</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <P>
                 You have the right to access your personnal data(ask us what
                 information we hold about you). You have the right to ask for
@@ -187,12 +187,12 @@ function PrivacyPolicyScreen() {
           </div>
         </ListGroup.Item>
         <ListGroup.Item
-          as='li'
-          className='d-flex justify-content-between align-items-start'
+          as="li"
+          className="d-flex justify-content-between align-items-start"
         >
-          <div className='ms-2 me-auto'>
+          <div className="ms-2 me-auto">
             <H2>Cookies Policy</H2>
-            <div className='my-2'>
+            <div className="my-2">
               <ul>
                 <li>
                   <div>
