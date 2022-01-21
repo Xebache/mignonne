@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+const SmSvgIcon = styled.svg`
+  width: .75rem;
+  height: .75rem;
+`;
+
 const SvgIcon = styled.svg`
   width: 3rem;
   height: 3rem;
@@ -88,4 +93,28 @@ const HandIcon = () => {
   );
 };
 
-export { BagIcon, UserIcon, HandIcon };
+const CloseIcon = () => {
+  return (
+    <SmSvgIcon
+      version="1.1"
+      id="close_svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 25 25"
+    >
+      <path
+        stroke="#3f3f3f"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        d="M 0,0 25,25"
+      />
+      <path
+        stroke="#3f3f3f"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        d="M 25,0 0,25"
+      />
+    </SmSvgIcon>
+  );
+};
+
+export { BagIcon, UserIcon, HandIcon, CloseIcon };
