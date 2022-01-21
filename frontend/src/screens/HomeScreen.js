@@ -10,7 +10,7 @@ import Error from "../components/Error";
 import Loader from "../components/Loader";
 import Product from "../components/Product";
 
-function HomeScreen() {
+const HomeScreen = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;

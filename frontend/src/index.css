@@ -6,3 +6,8 @@
 main {
   min-height: 80vh;
 }
+
+.btn-default:focus {
+  outline: none;
+  box-shadow: none;
+}

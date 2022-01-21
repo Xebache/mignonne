@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../actions/productActions";
@@ -10,13 +10,21 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
 
+import InputNumber from "../components/InputNumber";
 import Error from "../components/Error";
 import Loader from "../components/Loader";
 import { HandIcon } from "../components/Icons";
 
-function ProductScreen() {
+const ProductScreen = () => {
   const urlParam = useParams();
+  const navigate = useNavigate();
+
+  const [qty, setQty] = useState(1);
+  // let qty = 1;
+
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
@@ -24,6 +32,10 @@ function ProductScreen() {
   useEffect(() => {
     dispatch(listProductDetails(urlParam.id));
   }, [urlParam, dispatch]);
+
+  const addToCartHandler = () => {
+    navigate(`/cart/${urlParam.id}`);
+  };
 
   return (
     <Container>
@@ -37,13 +49,17 @@ function ProductScreen() {
       ) : (
         <Row>
           <Col md={7} className="text-center">
-            {product.images
-              ? product.images
-                  .filter((i) => i.isMain)
-                  .map((i) => (
-                    <Image key={i.path} src={i.path} alt={product.name} fluid />
-                  ))
-              : null}
+            {product.images &&
+              product.images
+                .filter((image) => image.isMain)
+                .map((image) => (
+                  <Image
+                    key={image.path}
+                    src={image.path}
+                    alt={product.name}
+                    fluid
+                  />
+                ))}
           </Col>
           <Col md={5}>
             <ListGroup variant="flush">
@@ -63,15 +79,31 @@ function ProductScreen() {
                   €
                 </h5>
               </ListGroup.Item>
+              {product.quantityInStock === 0 && (
+                <ListGroup.Item style={{ border: "none" }}>
+                  <p>Out of stock</p>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
-                <Button
-                  className="btn-block w-100"
-                  type="button"
-                  variant="dark"
-                  style={{ fontWeight: "200" }}
-                >
-                  Ajouter au panier
-                </Button>
+                <Row>
+                  {product.quantityInStock > 1 && (
+                    <Col sm={4}>
+                      <InputNumber value={qty} setValue={setQty} min={1} max={product.quantityInStock} />
+                    </Col>
+                  )}
+                  <Col>
+                    <Button
+                      onClick={addToCartHandler}
+                      disabled={product.quantityInStock === 0}
+                      className="btn-block w-100"
+                      type="button"
+                      variant="dark"
+                      style={{ fontWeight: "200" }}
+                    >
+                      Ajouter au panier
+                    </Button>
+                  </Col>
+                </Row>
               </ListGroup.Item>
               <ListGroup.Item className="text-center">
                 <ListGroup horizontal className="d-flex justify-content-center">
@@ -103,6 +135,6 @@ function ProductScreen() {
       )}
     </Container>
   );
-}
+};
 
 export default ProductScreen;

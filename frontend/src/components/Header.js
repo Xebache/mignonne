@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Logo } from "./Logo";
 import { BagIcon, UserIcon } from "./Icons";
 
-function Header() {
+const Header = () => {
   return (
     <header>
       <Navbar bg="light" expand="lg" collapseOnSelect>

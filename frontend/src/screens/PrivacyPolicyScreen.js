@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import { H2, H3, P, Li } from "../styles/GlobalStyles";
 
-function PrivacyPolicyScreen() {
+const PrivacyPolicyScreen = () => {
   return (
     <Container>
       <ListGroup as="ol" numbered variant="flush">

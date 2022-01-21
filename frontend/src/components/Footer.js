@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer style={{ fontSize: ".65rem" }}>
       <Container className="py-5 text-center">

@@ -2,8 +2,8 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-function Product({ product }) {
-  const mainImagePath = product.images.find((i) => i.isMain).path;
+const Product = ({ product }) => {
+  const mainImagePath = product.images.find((image) => image.isMain).path;
 
   return (
     <Card

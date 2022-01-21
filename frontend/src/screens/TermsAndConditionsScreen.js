@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 
-function TermsAndConditionsScreen() {
+const TermsAndConditionsScreen = () => {
   return <Container></Container>;
 }
 

@@ -28,7 +28,7 @@ class Product(models.Model):
     collection = models.ForeignKey(
         Collection, on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
-    inStock = models.BooleanField(default=True, null=False, blank=False)
+    quantityInStock = models.IntegerField(default=1, null=False, blank=False)
     id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
@@ -71,11 +71,12 @@ class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=False, blank=False)
+    qty = models.IntegerField(default=1, null=False, blank=False)
     price = models.DecimalField(
         max_digits=4, decimal_places=2, null=False, blank=False)
     image = models.CharField(max_length=200, null=False, blank=False)
     id = models.AutoField(primary_key=True, editable=False)
-
+    
     def __str__(self) -> str:
         return self.name
 
