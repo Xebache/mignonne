@@ -6,7 +6,7 @@ import { listProducts } from "../actions/productActions";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Error from "../components/Error";
+import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Product from "../components/Product";
 
@@ -25,7 +25,7 @@ const HomeScreen = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Error variant="danger">{error}</Error>
+        <Message variant="danger">{error}</Message>
       ) : (
         <Row>
           {products.map((product) => (

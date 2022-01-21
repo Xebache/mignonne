@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
@@ -22,7 +22,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         type="button"
         style={{ borderRight: "none" }}
       >
-        -
+        &#45;
       </Button>
       <Form.Control
         disabled={true}
@@ -43,7 +43,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         type="button"
         style={{ borderLeft: "none" }}
       >
-        +
+        &#43;
       </Button>
     </InputGroup>
   );

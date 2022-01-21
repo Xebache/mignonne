@@ -19,7 +19,10 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeScreen />} exact />
             <Route path="/product/:id" element={<ProductScreen />} />
-            <Route path="/cart/:id" element={<CartScreen />} />
+            <Route path="/cart" element={<CartScreen />} >
+              {/* <Route path=":id" element={<CartScreen />}/> */}
+              <Route path=":id/:qty" element={<CartScreen />}/>
+            </Route>
             <Route
               path="privacy-policy"
               element={<PrivacyPolicyScreen />}

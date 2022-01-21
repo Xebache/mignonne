@@ -10,42 +10,39 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
 
 import InputNumber from "../components/InputNumber";
-import Error from "../components/Error";
+import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { HandIcon } from "../components/Icons";
 
 const ProductScreen = () => {
-  const urlParam = useParams();
+  const productId = useParams().id;
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
-  // let qty = 1;
 
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
 
   useEffect(() => {
-    dispatch(listProductDetails(urlParam.id));
-  }, [urlParam, dispatch]);
+    dispatch(listProductDetails(productId));
+  }, [dispatch, productId]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${urlParam.id}`);
+    navigate(`/cart/${productId}/${qty}`);
   };
 
   return (
     <Container>
-      <Link to="/" className="btn btn-light my-3">
+      {/* <Link to="/" className="btn btn-light my-3">
         <HandIcon />
-      </Link>
+      </Link> */}
       {loading ? (
         <Loader />
       ) : error ? (
-        <Error variant="danger">{error}</Error>
+        <Message variant="danger">{error}</Message>
       ) : (
         <Row>
           <Col md={7} className="text-center">
@@ -75,8 +72,7 @@ const ProductScreen = () => {
                 <h5>
                   {product.price === Math.floor(product.price)
                     ? product.price
-                    : parseInt(product.price)}{" "}
-                  €
+                    : parseInt(product.price)}{" €"}
                 </h5>
               </ListGroup.Item>
               {product.quantityInStock === 0 && (
@@ -87,7 +83,7 @@ const ProductScreen = () => {
               <ListGroup.Item>
                 <Row>
                   {product.quantityInStock > 1 && (
-                    <Col sm={4}>
+                    <Col sm={4} md="{5}" xl={4} xxl={3}>
                       <InputNumber value={qty} setValue={setQty} min={1} max={product.quantityInStock} />
                     </Col>
                   )}

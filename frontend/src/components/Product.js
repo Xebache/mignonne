@@ -28,8 +28,7 @@ const Product = ({ product }) => {
           <Card.Text className="text-muted d-flex justify-content-end">
             {product.price === Math.floor(product.price)
               ? product.price
-              : parseInt(product.price)}{" "}
-            €
+              : parseInt(product.price)}{" €"}
           </Card.Text>
         </Link>
       </Card.Body>
