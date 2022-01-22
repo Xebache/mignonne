@@ -35,7 +35,7 @@ const ProductScreen = () => {
   };
 
   return (
-    <Container>
+    <Container className="my-5">
       {/* <Link to="/" className="btn btn-light my-3">
         <HandIcon />
       </Link> */}

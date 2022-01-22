@@ -66,7 +66,7 @@ const CartScreen = () => {
             </Row>
             <Row className="mt-5">
               <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
-                <Button style={{ background: "#bc9105", border: "none" }}>
+                <Button style={{ background: "#bc9105", border: "none", borderRadius: "0" }}>
                   Return to shop
                 </Button>
               </Link>

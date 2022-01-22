@@ -1,10 +1,11 @@
 from django.db import models
+import uuid
 from django.contrib.auth.models import User
 
 
 class Category(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.name
@@ -12,7 +13,7 @@ class Category(models.Model):
 
 class Collection(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.name
@@ -29,8 +30,7 @@ class Product(models.Model):
         Collection, on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     quantityInStock = models.IntegerField(default=1, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
-
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     def __str__(self) -> str:
         return self.name
 
@@ -40,7 +40,7 @@ class Image(models.Model):
         Product, related_name='images', on_delete=models.SET_NULL, null=True)
     path = models.ImageField(null=True, blank=True)
     isMain = models.BooleanField(default=True, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return str(self.path)
@@ -61,7 +61,7 @@ class Order(models.Model):
     deliveredAt = models.DateTimeField(
         auto_now_add=False, null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return str(self.createdAt)
@@ -75,7 +75,7 @@ class OrderProduct(models.Model):
     price = models.DecimalField(
         max_digits=4, decimal_places=2, null=False, blank=False)
     image = models.CharField(max_length=200, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     
     def __str__(self) -> str:
         return self.name
@@ -91,7 +91,7 @@ class ShippingAddress(models.Model):
     postalCode = models.CharField(max_length=20, null=False, blank=False)
     city = models.CharField(max_length=50, null=False, blank=False)
     country = models.CharField(max_length=50, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.address
@@ -108,7 +108,7 @@ class BillingAddress(models.Model):
     postalCode = models.CharField(max_length=20, null=False, blank=False)
     city = models.CharField(max_length=50, null=False, blank=False)
     country = models.CharField(max_length=50, null=False, blank=False)
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.address
