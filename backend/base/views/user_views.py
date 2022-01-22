@@ -7,8 +7,7 @@ from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 
-from .models import Product
-from .serializers import ProductSerializer, MyTokenObtainPairSerializer, UserSerializer, UserWithTokenSerializer
+from base.serializers import MyTokenObtainPairSerializer, UserSerializer, UserWithTokenSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -20,9 +19,9 @@ def registerUser(request):
     data = request.data
     try:
         user = User.objects.create(
-            first_name=data['name'],
-            username=data['email'],
-            password=make_password(data['password'])
+            first_name = data['name'],
+            username = data['email'],
+            password = make_password(data['password'])
         )
         serializer = UserWithTokenSerializer(user, many=False)
         return Response(serializer.data)
@@ -46,14 +45,3 @@ def getUsers(request):
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
-
-@api_view(['GET'])
-def getProducts(request):
-    serializer = ProductSerializer(Product.objects.all(), many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def getProduct(request, pk):
-    serializer = ProductSerializer(Product.objects.get(id=pk), many=False)
-    return Response(serializer.data)
