@@ -20,7 +20,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         onClick={decrementQuantity}
         variant="outline-dark"
         type="button"
-        style={{ borderRight: "none" }}
+        style={{ borderRight: "none"}}
       >
         &#45;
       </Button>
@@ -41,7 +41,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         onClick={incrementQuantity}
         variant="outline-dark"
         type="button"
-        style={{ borderLeft: "none" }}
+        style={{ borderLeft: "none"}}
       >
         &#43;
       </Button>

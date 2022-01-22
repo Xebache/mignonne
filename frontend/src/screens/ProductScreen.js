@@ -94,7 +94,7 @@ const ProductScreen = () => {
                       className="btn-block w-100"
                       type="button"
                       variant="dark"
-                      style={{ fontWeight: "200" }}
+                      style={{ background: "#bc9105", border: "none", fontWeight: "200" }}
                     >
                       Ajouter au panier
                     </Button>
