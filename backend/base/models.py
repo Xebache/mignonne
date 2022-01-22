@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 import uuid
-from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -44,6 +45,14 @@ class Image(models.Model):
 
     def __str__(self) -> str:
         return str(self.path)
+
+    def clean(self):
+        if self.isMain:
+            main = Image.objects.filter(isMain=True, product=self.product)
+            if self.id:
+                main = main.exclude(id=self.id)
+            if main.exists():
+                raise ValidationError("Only one main image per product... This product already has a main image.")
 
 
 class Order(models.Model):
