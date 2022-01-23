@@ -49,24 +49,30 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
-    console.log("checkout", cartItems)
-  }
+    console.log("checkout", cartItems);
+  };
 
   return (
     <Container>
       <h1 className="my-5" style={{ fontWeight: "300", fontSize: "2rem" }}>
-        Shopping Cart
+        Panier
       </h1>
       {cartItems.length === 0 ? (
         <Container>
           <Message variant="light">
             <Row className="my-5">
-              <Col>Your shopping cart is currently empty</Col>
+              <Col>Votre panier est vide</Col>
             </Row>
             <Row className="mt-5">
               <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
-                <Button style={{ background: "#bc9105", border: "none", borderRadius: "0" }}>
-                  Return to shop
+                <Button
+                  style={{
+                    background: "#bc9105",
+                    border: "none",
+                    borderRadius: "0",
+                  }}
+                >
+                  Retour à la boutique
                 </Button>
               </Link>
             </Row>
@@ -89,13 +95,26 @@ const CartScreen = () => {
               {cartItems.map((item) => (
                 <Tr key={item.id} className="align-middle">
                   <Td>
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      style={{ height: "3rem", width: "3rem", borderRadius: "50%" }}
-                    />
+                    <Link to={`/product/${item.id}`}>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        style={{
+                          height: "3rem",
+                          width: "3rem",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </Link>
                   </Td>
-                  <td>{item.name}</td>
+                  <td>
+                    <Link
+                      to={`/product/${item.id}`}
+                      style={{ textDecoration: "none", color: "#000000" }}
+                    >
+                      {item.name}
+                    </Link>
+                  </td>
                   <Td className="text-center ">
                     {item.price === Math.floor(item.price)
                       ? item.price
@@ -123,30 +142,51 @@ const CartScreen = () => {
           </Table>
           <Row>
             <Col lg={{ span: 4, offset: 8 }} sm={{ span: 6, offset: 6 }}>
-              <Card body style={{ border: "1px solid #bc9105", borderRadius: "0" }}>
+              <Card
+                body
+                style={{ border: "1px solid #bc9105", borderRadius: "0" }}
+              >
                 <ListGroup variant="flush">
                   <ListGroup.Item className="d-flex flex-row justify-content-between flex-wrap">
-                    <h2 
-                      className="text-nowrap" 
+                    <h2
+                      className="text-nowrap"
                       style={{ fontSize: ".65rem", fontWeight: "400" }}
-                    >SOUS-TOTAL</h2>
-                    <p 
-                      className="text-nowrap" 
-                      style={{ fontSize: ".85rem", marginTop: "-.3rem", marginBottom: "-1rem" }}
                     >
-                      {cartItems.reduce((acc, item) => acc + Number(item.price),0)}
+                      SOUS-TOTAL
+                    </h2>
+                    <p
+                      className="text-nowrap"
+                      style={{
+                        fontSize: ".85rem",
+                        marginTop: "-.3rem",
+                        marginBottom: "-1rem",
+                      }}
+                    >
+                      {cartItems.reduce(
+                        (acc, item) => acc + Number(item.price),
+                        0
+                      )}
                       {" €"}
                     </p>
                   </ListGroup.Item>
                   <ListGroup.Item className="d-flex flex-row justify-content-between">
-                    <h2 style={{ fontSize: ".65rem", fontWeight: "400", marginTop: ".5rem" }}>
+                    <h2
+                      style={{
+                        fontSize: ".65rem",
+                        fontWeight: "400",
+                        marginTop: ".5rem",
+                      }}
+                    >
                       TOTAL
                     </h2>
-                    <p 
-                      className="text-nowrap" 
+                    <p
+                      className="text-nowrap"
                       style={{ fontSize: ".85rem", marginBottom: "-1rem" }}
                     >
-                      {cartItems.reduce((acc, item) => acc + Number(item.price),0)}
+                      {cartItems.reduce(
+                        (acc, item) => acc + Number(item.price),
+                        0
+                      )}
                       {" €"}
                     </p>
                   </ListGroup.Item>
@@ -156,12 +196,18 @@ const CartScreen = () => {
           </Row>
           <Row className="mt-2">
             <Col lg={{ span: 4, offset: 8 }} sm={{ span: 6, offset: 6 }}>
-              <Button 
-                variant="dark" 
-                className="w-100" 
-                style={{border: "none", borderRadius: "0", background: "#bc9105"}}
+              <Button
+                variant="dark"
+                className="w-100"
+                style={{
+                  border: "none",
+                  borderRadius: "0",
+                  background: "#bc9105",
+                }}
                 onClick={checkoutHandler}
-              >Checkout</Button>
+              >
+                Checkout
+              </Button>
             </Col>
           </Row>
         </Container>

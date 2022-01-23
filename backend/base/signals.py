@@ -8,5 +8,4 @@ def updateUser(sender, instance, **kwargs):
     user = instance
     if user.email != '':
         user.username = user.email
-        user.email = user.email
-    print(user.username, user.email)
+

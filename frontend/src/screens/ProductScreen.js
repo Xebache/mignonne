@@ -106,21 +106,13 @@ const ProductScreen = () => {
                   <ListGroup.Item style={{ border: "none" }}>
                     <Image
                       src={`${process.env.PUBLIC_URL}/icons/pinterest.svg`}
-                      style={{
-                        height: "1rem",
-                        borderRadius: "50%",
-                        opacity: "0.3",
-                      }}
+                      style={{ height: "1rem", borderRadius: "50%", opacity: "0.3" }}
                     />
                   </ListGroup.Item>
                   <ListGroup.Item style={{ border: "none" }}>
                     <Image
                       src={`${process.env.PUBLIC_URL}/icons/facebook.svg`}
-                      style={{
-                        height: "1rem",
-                        borderRadius: "50%",
-                        opacity: "0.3",
-                      }}
+                      style={{ height: "1rem", borderRadius: "50%", opacity: "0.3" }}
                     />
                   </ListGroup.Item>
                 </ListGroup>

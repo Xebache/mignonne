@@ -34,12 +34,12 @@ const Header = () => {
               </LinkContainer>
             </div>
           </div>
-          <div className="d-flex flex-row justify-content-center w-100">
+          {/* <div className="d-flex flex-row justify-content-center w-100">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto"></Nav>
             </Navbar.Collapse>
-          </div>
+          </div> */}
         </Container>
       </Navbar>
     </header>
