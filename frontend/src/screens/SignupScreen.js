@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { MyCard } from "../styles/Card";
+import { BlackCard } from "../styles/Card";
 import { MyTextField } from "../styles/Inputs";
 
 import Loader from "../components/Loader";
@@ -40,7 +40,7 @@ const LoginScreen = () => {
 
   return (
     <Box component="span" sx={{ display: "flex", justifyContent: "center" }}>
-      <MyCard>
+      <BlackCard>
         <h1
           className="mb-3 text-center"
           style={{ fontWeight: "300", fontSize: "2rem" }}
@@ -118,7 +118,7 @@ const LoginScreen = () => {
             </Link>
           </div>
         </CardActions>
-      </MyCard>
+      </BlackCard>
     </Box>
   );
 };

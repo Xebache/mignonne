@@ -4,12 +4,18 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../actions/productActions";
 
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
+
+import Box from '@mui/material/Box';
+import Button from "@mui/material/Button";
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { BlackCard } from "../styles/Card";
 
 import InputNumber from "../components/InputNumber";
 import Message from "../components/Message";
@@ -44,6 +50,7 @@ const ProductScreen = () => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
+        <BlackCard sx={{ display: 'flex' }}>
         <Row>
           <Col md={7} className="text-center">
             {product.images &&
@@ -58,14 +65,14 @@ const ProductScreen = () => {
                   />
                 ))}
           </Col>
-          <Col md={5}>
+          <Col md={5} className="d-flex align-items-center">
             <ListGroup variant="flush">
               <ListGroup.Item style={{ border: "none" }}>
                 <h5 className="text-nowrap" style={{ fontWeight: "300" }}>
                   {product.name}
                 </h5>
               </ListGroup.Item>
-              <ListGroup.Item style={{ border: "none" }}>
+              <ListGroup.Item style={{ border: "none", fontSize: ".9rem" }}>
                 {product.description}
               </ListGroup.Item>
               <ListGroup.Item style={{ border: "none" }}>
@@ -89,14 +96,14 @@ const ProductScreen = () => {
                   )}
                   <Col>
                     <Button
+                      type="submit"
+                      className="w-100"
+                      sx={{ "&.MuiButton-outlined": {color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
+                      variant="outlined"
                       onClick={addToCartHandler}
                       disabled={product.quantityInStock === 0}
-                      className="btn-block w-100"
-                      type="button"
-                      variant="dark"
-                      style={{ background: "#bc9105", border: "none", fontWeight: "200" }}
                     >
-                      Ajouter au panier
+                      Valider
                     </Button>
                   </Col>
                 </Row>
@@ -120,6 +127,7 @@ const ProductScreen = () => {
             </ListGroup>
           </Col>
         </Row>
+        </BlackCard>
       )}
     </Container>
   );
