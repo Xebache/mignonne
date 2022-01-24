@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
 
+import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -20,7 +21,7 @@ const HomeScreen = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Container>
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
@@ -42,7 +43,7 @@ const HomeScreen = () => {
           ))}
         </Row>
       )}
-    </div>
+    </Container>
   );
 }
 
