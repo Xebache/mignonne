@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Badge from '@mui/material/Badge';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
@@ -16,8 +17,12 @@ import UserDialog from "./UserDialog";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+
   const loggedUser = useSelector((state) => state.loggedUser);
   const { currentUser } = loggedUser;
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   const openUserDialog = () => {
     setOpen(true);
@@ -36,11 +41,29 @@ const Header = () => {
               </LinkContainer>
             </Box>
             <Box className="d-flex flex-row">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <BagIcon />
-                </Nav.Link>
-              </LinkContainer>
+              {cartItems.length > 0 ? (
+                <LinkContainer to="/cart">
+                  <Nav.Link>
+                  <Badge 
+                    badgeContent={cartItems.length} 
+                    sx={{ '& .MuiBadge-badge': {
+                      right: 22,
+                      top: 30,
+                      background: "transparent",
+                      border: "1px solid #6f6f6f",
+                      color: "#6f6f6f",
+                      padding: '0 4px' } }}>
+                    <BagIcon color="#bc9105" />
+                  </Badge>
+                  </Nav.Link>
+                </LinkContainer>
+              ) : (
+                <LinkContainer to="/cart">
+                  <Nav.Link>
+                    <BagIcon color="#6f6f6f" />
+                  </Nav.Link>
+                </LinkContainer>
+              )}
               {currentUser ? (
                 <Fragment>
                   <Button
@@ -56,7 +79,7 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <OpenEyeIcon color="#4f4f4f" />
+                    <OpenEyeIcon color="#6f6f6f" />
                   </Nav.Link>
                 </LinkContainer>
               )}

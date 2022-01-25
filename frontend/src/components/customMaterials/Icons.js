@@ -27,7 +27,7 @@ const StrokePath = styled.path`
   stroke-linejoin: round;
 `;
 
-const BagIcon = () => {
+const BagIcon = ({ color }) => {
   return (
     <SvgIcon
       version="1.1"
@@ -36,10 +36,10 @@ const BagIcon = () => {
       viewBox="0 0 50 55"
     >
       <path
-       strokeWidth="5.99433" fill="#bc9105"
+       strokeWidth="5.99433" fill={ color }
        d="m 38.165314,20.816317 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z m -17.433018,0.101245 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z" />
     <path
-    fill="none" stroke="#bc9105" strokeWidth="0.95"
+    fill="none" stroke={ color } strokeWidth="0.95"
     d="m 18.710385,19.358365 c 1e-6,-4.697846 2.672912,-15.308498 8.869209,-15.187002 6.196297,0.121496 8.585719,10.529655 8.54522,14.984508 M 11.218132,15.996975 7.61375,49.286882 46.249481,49.165386 43.698065,15.996975 Z" />
     </SvgIcon>
   );

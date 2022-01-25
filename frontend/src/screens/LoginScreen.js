@@ -37,7 +37,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (currentUser) navigate(redirect);
-  }, [currentUser, redirect]);
+  }, [currentUser, navigate, redirect]);
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <Box component="span" sx={{ display: "flex", justifyContent: "center" }}>
+    <Box component="span" sx={{ display: "flex", justifyContent: "center", marginLeft: "2vh", marginRight: "2vh" }}>
       <BlackCard>
         <h1
           className="mb-3 text-center"
@@ -71,6 +71,7 @@ const LoginScreen = () => {
               label="Email"
               onChange={(e) => setEmail(e.target.value)}
               className="w-100"
+              required={true}
             ></MyTextField>
             <MyTextField
               type="password"
@@ -79,6 +80,7 @@ const LoginScreen = () => {
               label="Mot de passe"
               onChange={(e) => setPassword(e.target.value)}
               className="w-100"
+              required={true}
             ></MyTextField>
           </Box>
         </CardContent>
@@ -101,7 +103,7 @@ const LoginScreen = () => {
             Pas encore membre ?
             <Link
               style={{ textDecoration: "none", color: "#bc9105" }}
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
+              to={redirect ? `/signup?redirect=${redirect}` : "/signup"}
             >
               {" "}
               Enregistrez-vous

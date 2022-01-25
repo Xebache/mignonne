@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../actions/userActions";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,113 +14,172 @@ import { MyTextField } from "../components/customMaterials/Inputs";
 import Loader from "../components/customMaterials/Loader";
 import Message from "../components/customMaterials/Message";
 
-const LoginScreen = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const redirect = location.search
-    ? location.search.split("=")[1]
-    : "/";
 
+function SignupScreen() {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.loggedUser);
   const { error, loading, currentUser } = loggedUser;
 
-  useEffect(() => {
-  }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  const signupHandler = (e) => {
-    e.preventDefault();
-    console.log("submit");
+  useEffect(() => {
+    if(currentUser) navigate(redirect)
+  }, [currentUser, navigate, redirect]);
+
+  const createNewUser = (data, resetForm) => {
+    dispatch(signup(data.name, data.email, data.password))
+      // API call integration will be here. Handle success / error response accordingly.
+    if (currentUser) {
+        resetForm({});
+    }
   };
 
   return (
-    <Box component="span" sx={{ display: "flex", justifyContent: "center" }}>
-      <BlackCard>
+    <Box
+      component="span"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        marginLeft: "2vh",
+        marginRight: "2vh",
+      }}
+    >
+      <BlackCard sx={{ maxWidth: "34.4em" }}>
         <h1
           className="mb-3 text-center"
           style={{ fontWeight: "300", fontSize: "2rem" }}
         >
           Enregistrez-vous
         </h1>
-        <CardContent>
-          {error && <Message variant="danger">{error}</Message>}
-          {loading && <Loader />}
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1 },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <MyTextField
-              type="text"
-              id="ctlName"
-              value={name}
-              label="Nom"
-              onChange={(e) => setName(e.target.value)}
-              className="w-100"
-            ></MyTextField>
-            <MyTextField
-              type="email"
-              id="ctlEmail"
-              value={email}
-              label="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-100"
-            ></MyTextField>
-            <MyTextField
-              type="password"
-              id="ctlPassword"
-              value={password}
-              label="Mot de passe"
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-100"
-            ></MyTextField>
-            <MyTextField
-              type="password"
-              id="ctlConfirmPassword"
-              value={confirmPassword}
-              label="Confirmez le mot de passe"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-100"
-            ></MyTextField>
-          </Box>
-        </CardContent>
-        <CardActions className="justify-content-center flex-column">
-          <Button
-            type="submit"
-            sx={{
-              "&.MuiButton-outlined": {
-                color: "#bc9105",
-                borderColor: "#bc9105",
-                fontWeight: "400",
-              },
-            }}
-            variant="outlined"
-            onClick={signupHandler}
-          >
-            Valider
-          </Button>
-          <div className="mt-3" style={{ fontSize: ".75rem" }}>
-            Déjà membre ?
-            <Link
-              style={{ textDecoration: "none", color: "#bc9105" }}
-              to={"/login"}
-            >
-              {" "}
-              Identifiez-vous
-            </Link>
-          </div>
-        </CardActions>
+        {error && <Message variant="danger">{error}</Message>}
+        {loading && <Loader />}
+        <Formik
+          initialValues={{
+            name: "",
+            password: "",
+            confirmPassword: "",
+            email: "",
+          }}
+          onSubmit={(values, actions) => createNewUser(values, actions.resetForm)}
+          validationSchema={Yup.object().shape({
+            email: Yup.string().email().required("Champ requis"),
+            name: Yup.string().required("Champ requis"),
+            password: Yup.string()
+              .matches(
+                /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+                "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
+              )
+              .required("champ requis"),
+            confirmPassword: Yup.string()
+              .required("Champ requis")
+              .oneOf(
+                [Yup.ref("password"), null],
+                "Les mots de passe ne correspondent pas"
+              ),
+          })}
+        >
+          {({
+            values,
+            touched,
+            errors,
+            handleBlur,
+            handleChange,
+            isSubmitting,
+          }) => (
+            <Form>
+              <CardContent>
+                <MyTextField
+                  className="w-100"
+                  name="name"
+                  id="name"
+                  label="Nom"
+                  value={values.name}
+                  type="text"
+                  helperText={errors.name && touched.name ? errors.name : " "}
+                  error={errors.name && touched.name ? true : false}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MyTextField
+                  className="w-100"
+                  name="password"
+                  id="password"
+                  label="Mot de passe"
+                  value={values.password}
+                  type="password"
+                  helperText={
+                    errors.password && touched.password ? errors.password : " "
+                  }
+                  error={errors.password && touched.password ? true : false}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MyTextField
+                  className="w-100"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  label="Confirmez le mot de passe"
+                  value={values.confirmPassword}
+                  type="password"
+                  helperText={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? errors.confirmPassword
+                      : " "
+                  }
+                  error={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? true
+                      : false
+                  }
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MyTextField
+                  className="w-100"
+                  name="email"
+                  id="email"
+                  label="Email"
+                  value={values.email}
+                  type="email"
+                  helperText={
+                    errors.email && touched.email ? errors.email : " "
+                  }
+                  error={errors.email && touched.email ? true : false}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </CardContent>
+              <CardActions className="justify-content-center flex-column">
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  sx={{ "&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </Button>
+                <Box className="mt-3" style={{ fontSize: ".75rem" }}>
+                  Déjà membre ?
+                  <Link
+                    style={{ textDecoration: "none", color: "#bc9105" }}
+                    to={redirect ? `/login?redirect=${redirect}` : "/login"}
+                  >
+                    {" "}
+                    Identifiez-vous
+                  </Link>
+                </Box>
+              </CardActions>
+            </Form>
+          )}
+        </Formik>
       </BlackCard>
     </Box>
   );
-};
+}
 
-export default LoginScreen;
+export default SignupScreen;
