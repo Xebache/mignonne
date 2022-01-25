@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
 
+import { useCookies } from "react-cookie";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
@@ -26,11 +28,14 @@ const LoginScreen = () => {
   const loggedUser = useSelector((state) => state.loggedUser);
   const { error, loading, currentUser } = loggedUser;
 
+  const [cookies, setCookie] = useCookies("currentUser");
+
   useEffect(() => {
-    if (currentUser && currentUser["email"]) {
-        navigate(redirect)
-        console.log("redirect", location)
-    };
+    if (currentUser) setCookie("currentUser", currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) navigate(redirect);
   }, [currentUser, redirect]);
 
   const submitHandler = (e) => {
@@ -79,7 +84,13 @@ const LoginScreen = () => {
         <CardActions className="justify-content-center flex-column">
           <Button
             type="submit"
-            sx={{ "&.MuiButton-outlined": {color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
+            sx={{
+              "&.MuiButton-outlined": {
+                color: "#bc9105",
+                borderColor: "#bc9105",
+                fontWeight: "400",
+              },
+            }}
             variant="outlined"
             onClick={submitHandler}
           >

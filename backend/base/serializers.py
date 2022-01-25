@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id', 'email', 'name', 'password', 'isAdmin']
 
     def get_name(self, obj):
         name = obj.first_name
@@ -38,7 +38,7 @@ class UserWithTokenSerializer(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = ['id', 'email', 'name', 'password', 'isAdmin', 'token']
 
     def get_token(self, obj):
         token = AccessToken.for_user(obj)

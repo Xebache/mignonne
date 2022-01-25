@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { login, userProfile } from "../actions/userActions";
+
+import { useCookies } from "react-cookie";
+
+import { withCookies } from "react-cookie";
+
 import CartScreen from "../screens/CartScreen";
+import Error404Screen from "../screens/Error404Screen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
@@ -10,6 +18,22 @@ import SignupScreen from "../screens/SignupScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 
 const Router = () => {
+
+  const loggedUser = useSelector((state) => state.loggedUser);
+
+const [cookies, setCookie] = useCookies();
+
+const dispatch = useDispatch();
+
+useEffect(() => {
+  if(loggedUser["currentUser"] && !cookies["currentUser"]) 
+     setCookie("currentUser", loggedUser['currentUser'])
+
+  else if (!loggedUser["currentUser"] && cookies["currentUser"])
+    console.log("TODO -> get user from token in backend !!!")
+})
+
+
   return (
     <Routes>
       <Route path="/" element={<HomeScreen />} exact />
@@ -25,8 +49,9 @@ const Router = () => {
         element={<TermsAndConditionsScreen />}
         exact
       />
+      <Route path="*" element={<Error404Screen />} />
     </Routes>
   );
 };
 
-export default Router;
+export default withCookies(Router);

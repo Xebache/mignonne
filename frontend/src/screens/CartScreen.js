@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+
+import { useDispatch, useSelector, MapStateToProps } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 import styled from "styled-components";
@@ -50,9 +52,17 @@ const CartScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  const [cookies, setCookie] = useCookies(["cartItems"]);
+
   useEffect(() => {
-    if (productId) dispatch(addToCart(productId, qty));
+    if (productId) {
+      dispatch(addToCart(productId, qty))
+    };
   }, [dispatch, productId, qty]);
+
+  useEffect(() => {
+    if(cartItems) setCookie("cartItems", cartItems)
+  }, [cartItems])
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
