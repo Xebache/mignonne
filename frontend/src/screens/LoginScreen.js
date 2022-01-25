@@ -32,6 +32,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (currentUser) setCookie("currentUser", currentUser);
+    console.log(cookies["access_token"])
   }, [currentUser]);
 
   useEffect(() => {

@@ -85,20 +85,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-REST_USE_JWT = True
-
-JWT_AUTH_COOKIE = 'myHttpOnlyCookie'
-
-JWT_AUTH_SECURE = True
-
-JWT_AUTH_SAMESITE = 'Strict'
-
-CSRF_COOKIE_NAME = "csrftoken"
-
-CSRF_COOKIE_HTTPONLY = False
-
-CSRF_COOKIE_SECURE = True
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 

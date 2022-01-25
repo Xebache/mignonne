@@ -1,19 +1,36 @@
+from django.conf import settings
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import status
 
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
+
 
 from base.serializers import MyTokenObtainPairSerializer, UserSerializer, UserWithTokenSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+    # def post(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+
+    #     try:
+    #         serializer.is_valid(raise_exception=True)
+    #     except ValidationError as error:
+    #         raise AuthenticationFailed(e.args[0])
+           
+    #       # set access token in browser with Httponly cookie.
+    #     res = Response(serializer.validated_data, status=status.HTTP_200_OK)
+    #     access_token = serializer.validated_data['access']
+    #     res.set_cookie("access_token", access_token, max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME').total_seconds(),samesite='Lax',secure=False, httponly=True)
+        
+    #     return res
 
 @api_view(['POST'])
 def registerUser(request):
