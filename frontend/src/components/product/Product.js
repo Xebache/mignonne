@@ -2,7 +2,6 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-import { BlackCard } from "../styles/Card";
 
 const Product = ({ product }) => {
   const mainImagePath = product.images.find((image) => image.isMain).path;

@@ -7,9 +7,9 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Product from "../components/Product";
+import Message from "../components/customMaterials/Message";
+import Loader from "../components/customMaterials/Loader";
+import Product from "../components/product/Product";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();

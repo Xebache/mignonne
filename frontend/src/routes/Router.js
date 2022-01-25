@@ -13,6 +13,7 @@ import Error404Screen from "../screens/Error404Screen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import ProductScreen from "../screens/ProductScreen";
 import SignupScreen from "../screens/SignupScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
@@ -39,6 +40,7 @@ useEffect(() => {
       <Route path="/" element={<HomeScreen />} exact />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/signup" element={<SignupScreen />} />
+      <Route path="/profile" element={<ProfileScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />}>
         <Route path=":id/:qty" element={<CartScreen />} />

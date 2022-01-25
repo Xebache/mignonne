@@ -3,15 +3,12 @@ import { Link, useParams } from "react-router-dom";
 
 import { useCookies } from "react-cookie";
 
-import { useDispatch, useSelector, MapStateToProps } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 import styled from "styled-components";
 
-// import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
@@ -20,15 +17,10 @@ import Table from "react-bootstrap/Table";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { BlackCard, YellowCard } from "../styles/Card";
+import { BlackCard, YellowCard } from "../components/customMaterials/Card";
 
-import { CloseIcon } from "../components/Icons";
-import Message from "../components/Message";
+import { CloseIcon } from "../components/customMaterials/Icons";
+import Message from "../components/customMaterials/Message";
 
 const Th = styled.th`
   font-weight: 500;
@@ -62,7 +54,7 @@ const CartScreen = () => {
 
   useEffect(() => {
     if(cartItems) setCookie("cartItems", cartItems)
-  }, [cartItems])
+  }, [cartItems, setCookie])
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));

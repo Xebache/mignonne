@@ -1,10 +1,13 @@
-import React from "react";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 
-const InputNumber = ({ value, setValue, min, max }) => {
+import theme from "../../styles/Theme";
 
+const InputNumber = ({ value, setValue, min, max }) => {
   const decrementQuantity = () => {
     setValue(value - 1);
   };
@@ -20,7 +23,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         onClick={decrementQuantity}
         variant="outline-dark"
         type="button"
-        style={{ borderRight: "none"}}
+        style={{ borderRight: "none" }}
       >
         &#45;
       </Button>
@@ -41,7 +44,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
         onClick={incrementQuantity}
         variant="outline-dark"
         type="button"
-        style={{ borderLeft: "none"}}
+        style={{ borderLeft: "none" }}
       >
         &#43;
       </Button>
@@ -49,4 +52,25 @@ const InputNumber = ({ value, setValue, min, max }) => {
   );
 };
 
-export default InputNumber;
+const MyTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: theme.palette.primary.main,
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: theme.palette.primary.main,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: theme.palette.primary.light,
+      fontFamily: ["Poppins"],
+    },
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
+    },
+  },
+});
+
+export { MyTextField, InputNumber };

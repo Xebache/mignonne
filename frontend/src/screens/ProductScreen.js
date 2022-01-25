@@ -11,16 +11,13 @@ import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 
-import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { BlackCard } from "../styles/Card";
+import { BlackCard } from "../components/customMaterials/Card";
 
-import InputNumber from "../components/InputNumber";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { HandIcon } from "../components/Icons";
+import { InputNumber } from "../components/customMaterials/Inputs";
+import Message from "../components/customMaterials/Message";
+import Loader from "../components/customMaterials/Loader";
+import { HandIcon } from "../components/customMaterials/Icons";
 
 const ProductScreen = () => {
   const productId = useParams().id;

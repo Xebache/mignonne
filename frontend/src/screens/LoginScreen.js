@@ -10,11 +10,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { BlackCard } from "../styles/Card";
-import { MyTextField } from "../styles/Inputs";
+import { BlackCard } from "../components/customMaterials/Card";
+import { MyTextField } from "../components/customMaterials/Inputs";
 
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import Loader from "../components/customMaterials/Loader";
+import Message from "../components/customMaterials/Message";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +39,7 @@ const LoginScreen = () => {
     if (currentUser) navigate(redirect);
   }, [currentUser, redirect]);
 
-  const submitHandler = (e) => {
+  const loginHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
@@ -93,7 +93,7 @@ const LoginScreen = () => {
               },
             }}
             variant="outlined"
-            onClick={submitHandler}
+            onClick={loginHandler}
           >
             Valider
           </Button>

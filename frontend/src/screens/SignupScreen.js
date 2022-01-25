@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/userActions";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { BlackCard } from "../styles/Card";
-import { MyTextField } from "../styles/Inputs";
+import { BlackCard } from "../components/customMaterials/Card";
+import { MyTextField } from "../components/customMaterials/Inputs";
 
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import Loader from "../components/customMaterials/Loader";
+import Message from "../components/customMaterials/Message";
 
 const LoginScreen = () => {
   const [name, setName] = useState("");
@@ -33,7 +32,7 @@ const LoginScreen = () => {
   useEffect(() => {
   }, []);
 
-  const submitHandler = (e) => {
+  const signupHandler = (e) => {
     e.preventDefault();
     console.log("submit");
   };
@@ -103,7 +102,7 @@ const LoginScreen = () => {
               },
             }}
             variant="outlined"
-            onClick={submitHandler}
+            onClick={signupHandler}
           >
             Valider
           </Button>
