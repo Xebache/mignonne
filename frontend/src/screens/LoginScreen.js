@@ -27,7 +27,6 @@ const FormikTest = () => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    console.log("useEffect")
     if (currentUser) navigate(redirect);
   }, [loggedUser, navigate, redirect]);
 
@@ -54,8 +53,6 @@ const FormikTest = () => {
             loginHandler(values, actions.resetForm);
             setTimeout(() => {
               actions.setSubmitting(false);
-              console.log(redirect, currentUser, loggedUser)
-              if (currentUser) navigate(redirect)
             }, 500);
           }}
           validationSchema={Yup.object().shape({
