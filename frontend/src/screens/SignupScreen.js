@@ -20,8 +20,8 @@ import * as Yup from "yup";
 
 function SignupScreen() {
   const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state.loggedUser);
-  const { error, loading, currentUser } = loggedUser;
+  const newUser = useSelector((state) => state.newUser);
+  const { error, loading, currentUser } = newUser;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,22 +32,14 @@ function SignupScreen() {
   }, [currentUser, navigate, redirect]);
 
   const createNewUser = (data, resetForm) => {
-    dispatch(signup(data.name, data.email, data.password))
-      // API call integration will be here. Handle success / error response accordingly.
-    if (currentUser) {
-        resetForm({});
-    }
-  };
+    dispatch(signup(data.name, data.email, data.password));
+    resetForm();
+  }
 
   return (
     <Box
       component="span"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        marginLeft: "2vh",
-        marginRight: "2vh",
-      }}
+      sx={{ display: "flex", justifyContent: "center", marginLeft: "2vh", marginRight: "2vh" }}
     >
       <BlackCard sx={{ maxWidth: "34.4em" }}>
         <h1
@@ -56,43 +48,31 @@ function SignupScreen() {
         >
           Enregistrez-vous
         </h1>
-        {error && <Message variant="danger">{error}</Message>}
-        {loading && <Loader />}
+       
         <Formik
-          initialValues={{
-            name: "",
-            password: "",
-            confirmPassword: "",
-            email: "",
+          initialValues={{ name: "", password: "", confirmPassword: "", email: "" }}
+          onSubmit={(values, actions) => {
+            createNewUser(values, actions.resetForm)
+            setTimeout(() => {
+              actions.setSubmitting(false)
+          }, 500)
           }}
-          onSubmit={(values, actions) => createNewUser(values, actions.resetForm)}
           validationSchema={Yup.object().shape({
             email: Yup.string().email().required("Champ requis"),
             name: Yup.string().required("Champ requis"),
             password: Yup.string()
-              .matches(
-                /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
-                "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
-              )
+              .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/, "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace")
               .required("champ requis"),
             confirmPassword: Yup.string()
               .required("Champ requis")
-              .oneOf(
-                [Yup.ref("password"), null],
-                "Les mots de passe ne correspondent pas"
-              ),
+              .oneOf([Yup.ref("password"), null], "Les mots de passe ne correspondent pas"),
           })}
         >
-          {({
-            values,
-            touched,
-            errors,
-            handleBlur,
-            handleChange,
-            isSubmitting,
-          }) => (
+          {({ values, touched, errors, handleBlur, handleChange, isSubmitting }) => (
             <Form>
               <CardContent>
+              {error && <Message variant="danger">{error}</Message>}
+              {loading && <Loader />}
                 <MyTextField
                   className="w-100"
                   name="name"
@@ -112,9 +92,7 @@ function SignupScreen() {
                   label="Mot de passe"
                   value={values.password}
                   type="password"
-                  helperText={
-                    errors.password && touched.password ? errors.password : " "
-                  }
+                  helperText={ errors.password && touched.password ? errors.password : " " }
                   error={errors.password && touched.password ? true : false}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -126,16 +104,8 @@ function SignupScreen() {
                   label="Confirmez le mot de passe"
                   value={values.confirmPassword}
                   type="password"
-                  helperText={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? errors.confirmPassword
-                      : " "
-                  }
-                  error={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? true
-                      : false
-                  }
+                  helperText={ errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : " " }
+                  error={ errors.confirmPassword && touched.confirmPassword ? true : false }
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -146,9 +116,7 @@ function SignupScreen() {
                   label="Email"
                   value={values.email}
                   type="email"
-                  helperText={
-                    errors.email && touched.email ? errors.email : " "
-                  }
+                  helperText={ errors.email && touched.email ? errors.email : " " }
                   error={errors.email && touched.email ? true : false}
                   onChange={handleChange}
                   onBlur={handleBlur}
