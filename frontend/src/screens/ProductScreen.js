@@ -81,7 +81,16 @@ const ProductScreen = () => {
               </ListGroup.Item>
               {product.quantityInStock === 0 && (
                 <ListGroup.Item style={{ border: "none" }}>
-                  <p>Out of stock</p>
+                  <Button
+                    type="submit"
+                    className="w-100"
+                    sx={{ "&.MuiButton-outlined": {color: "#4f4f4f", borderColor: "#4f4f4f", fontWeight: "400" } }}
+                    variant="outlined"
+                    onClick={addToCartHandler}
+                    disabled={true}
+                  >
+                      Out of stock
+                  </Button>
                 </ListGroup.Item>
               )}
               <ListGroup.Item>

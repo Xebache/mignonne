@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.contrib.auth.models import User
 from .models import *
@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'name', 'password', 'isAdmin']
 
     def get_name(self, obj):
-        name = obj.first_name
+        name = obj.first_name + " " + obj.last_name
         if name == '':
             name = obj.email
         return name
@@ -41,8 +41,8 @@ class UserWithTokenSerializer(UserSerializer):
         fields = ['id', 'email', 'name', 'password', 'isAdmin', 'token']
 
     def get_token(self, obj):
-        token = AccessToken.for_user(obj)
-        return str(token)
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)
 
 
 class ImageSerializer(serializers.ModelSerializer):

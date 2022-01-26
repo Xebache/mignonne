@@ -18,8 +18,8 @@ import UserDialog from "./UserDialog";
 const Header = () => {
   const [open, setOpen] = useState(false);
 
-  const loggedUser = useSelector((state) => state.loggedUser);
-  const { currentUser } = loggedUser;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { currentUser } = userLogin;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;

@@ -21,17 +21,17 @@ import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 
 const Router = () => {
 
-  const loggedUser = useSelector((state) => state.loggedUser);
+  const userLogin = useSelector((state) => state.userLogin);
 
 const [cookies, setCookie] = useCookies();
 
 const dispatch = useDispatch();
 
 useEffect(() => {
-  if(loggedUser["currentUser"] && !cookies["currentUser"]) 
-     setCookie("currentUser", loggedUser['currentUser'])
+  if(userLogin["currentUser"] && !cookies["currentUser"]) 
+     setCookie("currentUser", userLogin['currentUser'])
 
-  else if (!loggedUser["currentUser"] && cookies["currentUser"])
+  else if (!userLogin["currentUser"] && cookies["currentUser"])
     console.log("TODO -> get user from token in backend !!!")
 })
 

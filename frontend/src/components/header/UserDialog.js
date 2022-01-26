@@ -15,8 +15,8 @@ import { CloseIcon } from "../customMaterials/Icons"
 const UserDialog = ({ open, onClose }) => {
   const navigate = useNavigate();
 
-  const loggedUser = useSelector((state) => state.loggedUser);
-  const { currentUser } = loggedUser;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { currentUser } = userLogin;
   const dispatch = useDispatch();
 
   const toProfileHandler = () => {
@@ -48,7 +48,7 @@ const UserDialog = ({ open, onClose }) => {
           >
             <CloseIcon />
           </Button>
-          <ListItemText primary={currentUser.email} />
+          <ListItemText primary={currentUser.name} />
         </ListItem>
         <ListItem>
           <Button
@@ -57,7 +57,7 @@ const UserDialog = ({ open, onClose }) => {
             sx={{"&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
             onClick={toProfileHandler}
           >
-            Profil
+            Mon profil
           </Button>
         </ListItem>
         <ListItem>

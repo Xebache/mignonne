@@ -11,7 +11,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import status
 
 
-
 from base.serializers import MyTokenObtainPairSerializer, UserSerializer, UserWithTokenSerializer
 
 
@@ -24,23 +23,24 @@ class MyTokenObtainPairView(TokenObtainPairView):
     #         serializer.is_valid(raise_exception=True)
     #     except ValidationError as error:
     #         raise AuthenticationFailed(e.args[0])
-           
+
     #       # set access token in browser with Httponly cookie.
     #     res = Response(serializer.validated_data, status=status.HTTP_200_OK)
     #     access_token = serializer.validated_data['access']
     #     res.set_cookie("access_token", access_token, max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME').total_seconds(),samesite='Lax',secure=False, httponly=True)
-        
+
     #     return res
+
 
 @api_view(["POST"])
 def signup(request):
     data = request.data
     try:
         user = User.objects.create(
-            first_name = data["name"],
-            username = data["email"],
-            email = data["email"],
-            password = make_password(data["password"])
+            first_name=data["name"],
+            username=data["email"],
+            email=data["email"],
+            password=make_password(data["password"])
         )
         serializer = UserWithTokenSerializer(user, many=False)
         return Response(serializer.data)
@@ -52,9 +52,28 @@ def signup(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
-    print(request.COOKIES.get("currentUser")) 
     user = request.user
     serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+    # print(request.COOKIES.get("currentUser"))
+    user = request.user
+    serializer = UserWithTokenSerializer(user, many=False)
+
+    data = request.data
+    user.username = data["email"]
+    user.email = data["email"]
+    user.first_name = data["firstname"]
+    user.last_name = data["lastname"]
+    if data["password"] != "":
+        user.password = make_password(data["password"])
+
+    user.save()
+
     return Response(serializer.data)
 
 

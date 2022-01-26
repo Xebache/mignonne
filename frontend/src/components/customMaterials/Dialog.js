@@ -18,7 +18,7 @@ const BlackDialog = ({ open, onClose, children }) => {
       PaperProps={{ sx: { position: "fixed", top: 10, right: 10, m: 0, overflow: "hidden" } }}
     >
       <Slide direction="left" in={open} mountOnEnter unmountOnExit>
-        <BlackCard className="p-0" >{children}</BlackCard>
+        <BlackCard style={{minWidth: "20rem"}} className="p-0" >{children}</BlackCard>
       </Slide>
     </Dialog>
   );

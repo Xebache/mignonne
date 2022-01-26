@@ -20,8 +20,8 @@ import * as Yup from "yup";
 
 function SignupScreen() {
   const dispatch = useDispatch();
-  const newUser = useSelector((state) => state.newUser);
-  const { error, loading, currentUser } = newUser;
+  const userSignup = useSelector((state) => state.userSignup);
+  const { error, loading, currentUser } = userSignup;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -77,7 +77,7 @@ function SignupScreen() {
                   className="w-100"
                   name="name"
                   id="name"
-                  label="Nom"
+                  label="Prénom"
                   value={values.name}
                   type="text"
                   helperText={errors.name && touched.name ? errors.name : " "}

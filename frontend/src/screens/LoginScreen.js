@@ -19,8 +19,8 @@ import * as Yup from "yup";
 
 const FormikTest = () => {
   const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state.loggedUser);
-  const { error, loading, currentUser } = loggedUser;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, currentUser } = userLogin;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,7 +28,7 @@ const FormikTest = () => {
 
   useEffect(() => {
     if (currentUser) navigate(redirect);
-  }, [loggedUser, navigate, redirect]);
+  }, [userLogin, navigate, redirect]);
 
   const loginHandler = (data, resetForm) => {
     dispatch(login(data.email, data.password));
