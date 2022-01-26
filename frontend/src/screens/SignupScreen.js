@@ -31,7 +31,7 @@ function SignupScreen() {
     if(currentUser) navigate(redirect)
   }, [currentUser, navigate, redirect]);
 
-  const createNewUser = (data, resetForm) => {
+  const createNewUserHandler = (data, resetForm) => {
     dispatch(signup(data.name, data.email, data.password));
     resetForm();
   }
@@ -52,13 +52,13 @@ function SignupScreen() {
         <Formik
           initialValues={{ name: "", password: "", confirmPassword: "", email: "" }}
           onSubmit={(values, actions) => {
-            createNewUser(values, actions.resetForm)
+            createNewUserHandler(values, actions.resetForm)
             setTimeout(() => {
               actions.setSubmitting(false)
           }, 500)
           }}
           validationSchema={Yup.object().shape({
-            email: Yup.string().email().required("Champ requis"),
+            email: Yup.string().email("Adresse électronique invalide").required("Champ requis"),
             name: Yup.string().required("Champ requis"),
             password: Yup.string()
               .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/, "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace")
@@ -87,6 +87,18 @@ function SignupScreen() {
                 />
                 <MyTextField
                   className="w-100"
+                  name="email"
+                  id="email"
+                  label="Email"
+                  value={values.email}
+                  type="email"
+                  helperText={ errors.email && touched.email ? errors.email : " " }
+                  error={errors.email && touched.email ? true : false}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MyTextField
+                  className="w-100"
                   name="password"
                   id="password"
                   label="Mot de passe"
@@ -109,18 +121,6 @@ function SignupScreen() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <MyTextField
-                  className="w-100"
-                  name="email"
-                  id="email"
-                  label="Email"
-                  value={values.email}
-                  type="email"
-                  helperText={ errors.email && touched.email ? errors.email : " " }
-                  error={errors.email && touched.email ? true : false}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
               </CardContent>
               <CardActions className="justify-content-center flex-column">
                 <Button
@@ -129,7 +129,7 @@ function SignupScreen() {
                   sx={{ "&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
                   disabled={isSubmitting}
                 >
-                  Submit
+                  Valider
                 </Button>
                 <Box className="mt-3" style={{ fontSize: ".75rem" }}>
                   Déjà membre ?
