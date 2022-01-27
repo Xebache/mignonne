@@ -19,4 +19,13 @@ const YellowCard = styled(Card)({
     boxShadow: "none"
 })
 
-export { BlackCard, YellowCard }
+const TransparentCard = styled(Card)({
+    background: theme.palette.white.main,
+    border: "1px solid",
+    borderColor: "transparent",
+    padding: "1.5rem",
+    boxShadow: "none",
+    overflow: "hidden"
+})
+
+export { BlackCard, YellowCard, TransparentCard }

@@ -158,4 +158,24 @@ const CloseIcon = () => {
   );
 };
 
-export { BagIcon, UserIcon, OpenEyeIcon, CloseEyeIcon, HandIcon, CloseIcon };
+const ArrowIcon = ({ color }) => {
+  return (
+    <SvgIcon
+      version="1.1"
+      id="close_svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 19"
+    >
+      <path
+        stroke={ color }
+        strokeWidth="1.5"
+        fill="none"
+        d="M 30,-4 2.5,23.5 M 7.5,-4 h 22.5 l 0,22.5"
+      >
+      </path>
+
+    </SvgIcon>
+  )
+}
+
+export { BagIcon, UserIcon, OpenEyeIcon, CloseEyeIcon, HandIcon, CloseIcon, ArrowIcon };

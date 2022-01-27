@@ -7,10 +7,7 @@ const PrivacyPolicyScreen = () => {
   return (
     <Container>
       <ListGroup as="ol" numbered variant="flush">
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>
               Who is responsible for the processing of your personnal data ?
@@ -24,10 +21,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>How do we collect information ?</H2>
             <div className="my-2">
@@ -99,10 +93,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>How long will we keep your data ?</H2>
             <div className="my-2">
@@ -114,10 +105,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>Why is your personnal data collected ?</H2>
             <div className="my-2">
@@ -144,10 +132,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>To who will your personnal data be communicated ?</H2>
             <div className="my-2">
@@ -164,10 +149,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>What are you rights regarding your data ?</H2>
             <div className="my-2">
@@ -186,10 +168,7 @@ const PrivacyPolicyScreen = () => {
             </div>
           </div>
         </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-between align-items-start"
-        >
+        <ListGroup.Item className="d-flex justify-content-between align-items-start">
           <div className="ms-2 me-auto">
             <H2>Cookies Policy</H2>
             <div className="my-2">
@@ -261,6 +240,6 @@ const PrivacyPolicyScreen = () => {
       </ListGroup>
     </Container>
   );
-}
+};
 
 export default PrivacyPolicyScreen;
