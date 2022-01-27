@@ -42,8 +42,7 @@ const ProfileForm = () => {
   const updateUserHandler = (data) => {
     dispatch(updateUserProfile({
       "email": data.email,
-      "firstname": data.firstname,
-      "lastname": data.lastname,
+      "name": data.firstname,
       "password": data.password
     }))
   };

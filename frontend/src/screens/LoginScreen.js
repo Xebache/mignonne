@@ -12,7 +12,6 @@ import Loader from "../components/customMaterials/Loader";
 import Message from "../components/customMaterials/Message";
 import LoginForm from "../components/user/LoginForm";
 
-
 const LoginScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, currentUser } = userLogin;

@@ -4,13 +4,14 @@ import Container from "react-bootstrap/Container";
 
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import AccordionDetails from "@mui/material/AccordionDetails";
 
 import { AccordionSummary } from "../components/customMaterials/Accordion";
 import { BlackCard } from "../components/customMaterials/Card";
 import { ArrowIcon } from "../components/customMaterials/Icons";
 
 import ProfileForm from "../components/user/ProfileForm";
+import AddressForm from "../components/user/AddressForm";
 
 const ProfileScreen = () => {
   const collapsedIcon = (
@@ -46,14 +47,14 @@ const ProfileScreen = () => {
                 Mon profil
               </h2>
             </AccordionSummary>
-            <MuiAccordionDetails>
+            <AccordionDetails>
               <ProfileForm />
-            </MuiAccordionDetails>
+            </AccordionDetails>
           </Accordion>
         </BlackCard>
         <BlackCard className="mb-3">
         <Accordion
-        sx={{ boxShadow: "none" }}
+          sx={{ boxShadow: "none" }}
           expanded={expanded === "panel2"}
           onChange={handleChange("panel2")}
         >
@@ -63,33 +64,36 @@ const ProfileScreen = () => {
             id="panel2bh-header"
           >
             <h2
-                className="mb-3 text-center"
-                style={{ fontWeight: "300", fontSize: "2rem" }}
-              >
-                Mes commandes
-              </h2>
+              className="mb-3 text-center"
+              style={{ fontWeight: "300", fontSize: "2rem" }}
+            >
+              Mes commandes
+            </h2>
           </AccordionSummary>
         </Accordion>
         </BlackCard>
         <BlackCard>
-        <Accordion
-          sx={{ boxShadow: "none" }}
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
-        >
-          <AccordionSummary
-            expandIcon={expanded === "panel3" ? expandedIcon : collapsedIcon}
-            aria-controls="panel3bh-content"
-            id="panel3bh-header"
+          <Accordion
+            sx={{ boxShadow: "none" }}
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
           >
-            <h2
+            <AccordionSummary
+              expandIcon={expanded === "panel3" ? expandedIcon : collapsedIcon}
+              aria-controls="panel3bh-content"
+              id="panel3bh-header"
+            >
+              <h2
                 className="mb-3 text-center"
                 style={{ fontWeight: "300", fontSize: "2rem" }}
               >
                 Mes adresses
               </h2>
-          </AccordionSummary>
-        </Accordion>
+            </AccordionSummary>
+            <AccordionDetails>
+              <AddressForm />
+            </AccordionDetails>
+          </Accordion>
         </BlackCard>
       </Container>
     </>
