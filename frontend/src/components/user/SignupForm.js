@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signup } from "../../actions/userActions";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-
 import { MyTextField } from "../customMaterials/Inputs";
-import Loader from "../customMaterials/Loader";
-import Message from "../customMaterials/Message";
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -19,16 +13,6 @@ import * as Yup from "yup";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const userSignup = useSelector((state) => state.userSignup);
-  const { error, loading, currentUser } = userSignup;
-
-  const navigate = useNavigate();
-  const location = useLocation();
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-
-  useEffect(() => {
-    if(currentUser) navigate(redirect)
-  }, [currentUser, navigate, redirect]);
 
   const createNewUserHandler = (data, resetForm) => {
     dispatch(signup(data.name, data.email, data.password));
@@ -39,10 +23,8 @@ const SignupForm = () => {
     <Formik
       initialValues={{ name: "", password: "", confirmPassword: "", email: "" }}
       onSubmit={(values, actions) => {
+        actions.setSubmitting(false);
         createNewUserHandler(values, actions.resetForm);
-        setTimeout(() => {
-          actions.setSubmitting(false);
-        }, 500);
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -62,59 +44,55 @@ const SignupForm = () => {
     >
       {({ values, touched, errors, handleBlur, handleChange, isSubmitting }) => (
         <Form>
-          <CardContent>
-            {error && <Message variant="danger">{error}</Message>}
-            {loading && <Loader />}
-            <MyTextField
-              className="w-100"
-              name="name"
-              id="name"
-              label="Prénom"
-              value={values.name}
-              type="text"
-              helperText={errors.name && touched.name ? errors.name : " "}
-              error={errors.name && touched.name ? true : false}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <MyTextField
-              className="w-100"
-              name="email"
-              id="email"
-              label="Email"
-              value={values.email}
-              type="email"
-              helperText={errors.email && touched.email ? errors.email : " "}
-              error={errors.email && touched.email ? true : false}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <MyTextField
-              className="w-100"
-              name="password"
-              id="password"
-              label="Mot de passe"
-              value={values.password}
-              type="password"
-              helperText={ errors.password && touched.password ? errors.password : " " }
-              error={errors.password && touched.password ? true : false}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <MyTextField
-              className="w-100"
-              name="confirmPassword"
-              id="confirmPassword"
-              label="Confirmez le mot de passe"
-              value={values.confirmPassword}
-              type="password"
-              helperText={ errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : " " }
-              error={ errors.confirmPassword && touched.confirmPassword ? true : false }
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </CardContent>
-          <CardActions className="justify-content-center flex-column">
+          <MyTextField
+            className="w-100"
+            name="name"
+            id="name"
+            label="Prénom"
+            value={values.name}
+            type="text"
+            helperText={errors.name && touched.name ? errors.name : " "}
+            error={errors.name && touched.name ? true : false}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <MyTextField
+            className="w-100"
+            name="email"
+            id="email"
+            label="Email"
+            value={values.email}
+            type="email"
+            helperText={errors.email && touched.email ? errors.email : " "}
+            error={errors.email && touched.email ? true : false}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <MyTextField
+            className="w-100"
+            name="password"
+            id="password"
+            label="Mot de passe"
+            value={values.password}
+            type="password"
+            helperText={ errors.password && touched.password ? errors.password : " " }
+            error={errors.password && touched.password ? true : false}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <MyTextField
+            className="w-100"
+            name="confirmPassword"
+            id="confirmPassword"
+            label="Confirmez le mot de passe"
+            value={values.confirmPassword}
+            type="password"
+            helperText={ errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : " " }
+            error={ errors.confirmPassword && touched.confirmPassword ? true : false }
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <Box className="d-flex justify-content-center">
             <Button
               type="submit"
               variant="outlined"
@@ -123,17 +101,7 @@ const SignupForm = () => {
             >
               Valider
             </Button>
-            <Box className="mt-3" style={{ fontSize: ".75rem" }}>
-              Déjà membre ?
-              <Link
-                style={{ textDecoration: "none", color: "#bc9105" }}
-                to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              >
-                {" "}
-                Identifiez-vous
-              </Link>
-            </Box>
-          </CardActions>
+          </Box>
         </Form>
       )}
     </Formik>

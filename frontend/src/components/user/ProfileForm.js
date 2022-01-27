@@ -8,16 +8,14 @@ import Loader from "../customMaterials/Loader";
 import Message from "../customMaterials/Message";
 import { USER_UPDATE_RESET } from "../../constants/userConstants";
 
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { BlackCard, TransparentCard } from "../customMaterials/Card";
+import { TransparentCard } from "../customMaterials/Card";
 import { MyTextField } from "../customMaterials/Inputs";
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -52,7 +50,6 @@ const ProfileForm = () => {
 
   return (
     <TransparentCard>
-      
       <Formik
         initialValues={{
           firstname: user.name ? user.name : "",
@@ -63,10 +60,8 @@ const ProfileForm = () => {
         }}
         enableReinitialize={true}
         onSubmit={(values, actions) => {
+          actions.setSubmitting(false);
           updateUserHandler(values);
-          setTimeout(() => {
-            actions.setSubmitting(false);
-          }, 500);
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
