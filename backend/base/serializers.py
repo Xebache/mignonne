@@ -67,8 +67,12 @@ class ProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True, read_only=True)
     category = serializers.StringRelatedField()
     collection = serializers.StringRelatedField()
+    createdAt = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
         fields = ['id', 'name', 'description', 'price', 'images',
                   'category', 'collection', 'createdAt', 'quantityInStock']
+
+    def get_createdAt(self, obj):
+        return obj.createdAt.strftime('%d/%m/%Y')

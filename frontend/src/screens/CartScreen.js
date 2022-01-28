@@ -67,9 +67,9 @@ const CartScreen = () => {
   return (
     <Box component="span" sx={{ display: "flex", justifyContent: "center" }}>
       <BlackCard>
-        <h1 className="mx-3 my-3" style={{ fontWeight: "300", fontSize: "2rem" }}>
+        <h2 className="mx-3 my-3" style={{ fontWeight: "300", fontSize: "2rem" }}>
           Panier
-        </h1>
+        </h2>
         {cartItems.length === 0 ? (
           <CardContent>
             <Message variant="light">
@@ -109,11 +109,7 @@ const CartScreen = () => {
                         <Image
                           src={item.image}
                           alt={item.name}
-                          style={{
-                            height: "3rem",
-                            width: "3rem",
-                            borderRadius: "50%",
-                          }}
+                          style={{ height: "3rem", width: "3rem", borderRadius: "50%" }}
                         />
                       </Link>
                     </Td>

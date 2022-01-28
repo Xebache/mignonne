@@ -30,10 +30,7 @@ const LoginScreen = () => {
       sx={{ display: "flex", justifyContent: "center", marginLeft: "2vh", marginRight: "2vh" }}
     >
       <BlackCard sx={{ maxWidth: "34.4em" }}>
-        <h2
-          className="mb-3 text-center"
-          style={{ fontWeight: "300", fontSize: "2rem" }}
-        >
+        <h2 className="mb-3 text-center" style={{ fontWeight: "300", fontSize: "2rem" }}>
           Identifiez-vous
         </h2>
         <CardContent>
