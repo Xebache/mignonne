@@ -42,10 +42,10 @@ const ProductForm = ({ product }) => {
     <BlackCard>
       <Formik
         initialValues={{
-          name: product ? product.name : "",
-          description: product ? product.description : "",
-          price: product ? product.price : "",
-          quantityInStock: product ? product.quantityInStock : "",
+          name: product && product.name ? product.name : "",
+          description: product && product.description ? product.description : "",
+          price: product && product.price ? product.price : "",
+          quantityInStock: product && product.quantityInStock ? product.quantityInStock : "",
           category: null,
           collection: null,
         }}

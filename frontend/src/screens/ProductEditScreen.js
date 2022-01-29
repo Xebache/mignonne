@@ -17,6 +17,7 @@ function ProductEditScreen() {
   const { error, loading, product } = productDetails;
 
   useEffect(() => {
+    if(productId)
     dispatch(listProductDetails(productId));
   }, [dispatch, productId]);
 
