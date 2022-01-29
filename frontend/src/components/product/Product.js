@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 
 const Product = ({ product }) => {
-  const mainImagePath = product.images.find((image) => image.isMain).path;
+  const mainImagePath = product.images.length > 0 ? product.images.find((image) => image.isMain).path : "/images/default.webp";
 
   return (
     <Card

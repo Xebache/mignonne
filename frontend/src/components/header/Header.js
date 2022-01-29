@@ -65,7 +65,7 @@ const User = ({ user }) => {
         >
           <OpenEyeIcon color="#bc9105" />
         </Button>
-        <UserDialog open={open} onClose={() => setOpen(false)} />
+        <UserDialog open={open} onClose={() => setOpen(false)} user={user} />
       </Fragment>
     ) : (
       <LinkContainer to="/login">
@@ -98,21 +98,23 @@ const Header = () => {
                 </Navbar.Brand>
               </LinkContainer>
             </Box>
-            <Box>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                  <NavDropdown title="Admin" id="basic-nav-dropdown">
-                    <LinkContainer to="/admin/products">
-                      <NavDropdown.Item>Bijoux</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin/orders">
-                      <NavDropdown.Item>Commandes</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
-                </Nav>
-              </Navbar.Collapse>
-            </Box>
+            {currentUser && currentUser.isAdmin && (
+              <Box>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                  <Nav className="me-auto">
+                    <NavDropdown title="Admin" id="basic-nav-dropdown">
+                      <LinkContainer to="/admin/products">
+                        <NavDropdown.Item>Bijoux</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/orders">
+                        <NavDropdown.Item>Commandes</NavDropdown.Item>
+                      </LinkContainer>
+                    </NavDropdown>
+                  </Nav>
+                </Navbar.Collapse>
+              </Box>
+            )}
             <Box className="d-flex flex-row">
               <Bag items={cartItems} />
               <User user={currentUser} />

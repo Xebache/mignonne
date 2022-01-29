@@ -13,16 +13,19 @@ import Message from "../components/customMaterials/Message";
 import SignupForm from "../components/user/SignupForm";
 
 function SignupScreen() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { currentUser } = userLogin;
+
   const userSignup = useSelector((state) => state.userSignup);
-  const { error, loading, currentUser } = userSignup;
+  const { error, loading, signupUser } = userSignup;
 
   const navigate = useNavigate();
   const location = useLocation();
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    if(currentUser) navigate(redirect)
-  }, [currentUser, navigate, redirect]);
+    if(currentUser || signupUser) navigate(redirect)
+  }, [signupUser, currentUser, navigate, redirect]);
 
   return (
     <Box

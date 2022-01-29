@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { RequireAuth, RequireAdminAuth } from "../authentication/useAuth";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login, userProfile } from "../actions/userActions";
@@ -21,32 +22,19 @@ import ProductScreen from "../screens/ProductScreen";
 import SignupScreen from "../screens/SignupScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 
+import ProductCreateScreen from "../screens/ProductCreateScreen";
+
 const Router = () => {
-
-  const userLogin = useSelector((state) => state.userLogin);
-
-const [cookies, setCookie] = useCookies();
-
-const dispatch = useDispatch();
-
-useEffect(() => {
-  if(userLogin["currentUser"] && !cookies["currentUser"]) 
-     setCookie("currentUser", userLogin['currentUser'])
-
-  else if (!userLogin["currentUser"] && cookies["currentUser"])
-    console.log("TODO -> get user from token in backend !!!")
-})
-
-
   return (
     <Routes>
       <Route path="/" element={<HomeScreen />} exact />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/signup" element={<SignupScreen />} />
       <Route path="/password" element={<PasswordRecoveryScreen />} />
-      <Route path="/admin/products" element={<ProductListScreen />} />
-      <Route path="/admin/orders" element={<OrderListScreen />} />
-      <Route path="/profile" element={<ProfileScreen />} />
+      <Route path="/admin/products" element={<RequireAdminAuth><ProductListScreen /></RequireAdminAuth>} />
+      <Route path="/admin/products/create" element={<RequireAdminAuth><ProductCreateScreen /></RequireAdminAuth>} />
+      <Route path="/admin/orders" element={<RequireAdminAuth><OrderListScreen /></RequireAdminAuth>} />
+      <Route path="/profile" element={<RequireAuth><ProfileScreen /></RequireAuth>} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />}>
         <Route path=":id/:qty" element={<CartScreen />} />
@@ -62,4 +50,4 @@ useEffect(() => {
   );
 };
 
-export default withCookies(Router);
+export default Router;

@@ -12,11 +12,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { BlackDialog } from "../customMaterials/Dialog";
 import { CloseIcon } from "../customMaterials/Icons"
 
-const UserDialog = ({ open, onClose }) => {
+const UserDialog = ({ open, onClose, user }) => {
   const navigate = useNavigate();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { currentUser } = userLogin;
   const dispatch = useDispatch();
 
   const toProfileHandler = () => {
@@ -48,7 +46,7 @@ const UserDialog = ({ open, onClose }) => {
           >
             <CloseIcon />
           </Button>
-          <ListItemText primary={currentUser.name} />
+          <ListItemText primary={user.name} />
         </ListItem>
         <ListItem>
           <Button

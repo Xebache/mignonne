@@ -32,14 +32,16 @@ class Product(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     quantityInStock = models.IntegerField(default=1, null=False, blank=False)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
     def __str__(self) -> str:
         return self.name
 
 
+
 class Image(models.Model):
     product = models.ForeignKey(
-        Product, related_name='images', on_delete=models.SET_NULL, null=True)
-    path = models.ImageField(null=True, blank=True)
+        Product, related_name='images', on_delete=models.CASCADE, null=True)
+    path = models.ImageField(null=True, blank=True, default='/default.webp')
     isMain = models.BooleanField(default=True, null=False, blank=False)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 

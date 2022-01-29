@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
 
@@ -12,9 +14,12 @@ import * as Yup from "yup";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
   const loginHandler = (data, resetForm) => {
-    dispatch(login(data.email, data.password));
+      console.log(state)
+    dispatch(login(data.email, data.password)).then(() => navigate(state?.path || "/"));
     resetForm();
   };
 

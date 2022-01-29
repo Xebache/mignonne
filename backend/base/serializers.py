@@ -48,13 +48,13 @@ class UserWithTokenSerializer(UserSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['path', 'isMain']
+        fields = ['id', 'path', 'isMain']
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['__all__']
+        fields = ['id', 'name']
 
 
 class CollectionSerializer(serializers.ModelSerializer):

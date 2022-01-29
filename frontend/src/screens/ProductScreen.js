@@ -55,7 +55,7 @@ const ProductScreen = () => {
                 .filter((image) => image.isMain)
                 .map((image) => (
                   <Image
-                    key={image.path}
+                    key={image.path === "" ? image.path : "/images/default.webp"}
                     src={image.path}
                     alt={product.name}
                     fluid
