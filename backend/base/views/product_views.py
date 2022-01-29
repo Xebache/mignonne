@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from base.models import Product, Image
+from base.models import Product, Image, Category, Collection
 from base.serializers import ProductSerializer
 
 
@@ -27,8 +27,8 @@ def updateProduct(request, pk):
     product.name=data['name'],
     product.description=data['description'],
     product.price=data['price'],
-    product.category=data['category'],
-    product.collection=data['collection'],
+    product.category=Category.objects.get(id=data['category']),
+    product.collection=Collection.objects.get(id=data['collection']),
     product.quantityInStock=data['quantityInStock']
 
     product.save()
@@ -54,22 +54,22 @@ def createProduct(request):
         name=data['name'],
         description=data['description'],
         price=data['price'],
-        category=data['category'],
-        collection=data['collection'],
+        category=Category.objects.get(id=data['category']),
+        collection=Collection.objects.get(id=data['collection']),
         quantityInStock=data['quantityInStock']
     )
-    if(len(data['images']) > 0):
-        for dataImage in data['images']:
-            Image.objects.create(
-                product=product.id,
-                path=dataImage.path,
-                isMain=dataImage.isMain
-            )
-    else:
-        Image.objects.create(
-            product=product.id,
-            isMain=True
-        )
+    # if(len(data['images']) > 0):
+    #     for dataImage in data['images']:
+    #         Image.objects.create(
+    #             product=product.id,
+    #             path=dataImage.path,
+    #             isMain=dataImage.isMain
+    #         )
+    # else:
+    #     Image.objects.create(
+    #         product=product.id,
+    #         isMain=True
+    #     )
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 

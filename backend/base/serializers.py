@@ -60,7 +60,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
-        fields = ['__all__']
+        fields = ['id', 'name']
 
 
 class ProductSerializer(serializers.ModelSerializer):
