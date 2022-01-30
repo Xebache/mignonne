@@ -82,7 +82,12 @@ const headCells = [
   },
 ];
 
-const TableToolBar = ({ numSelected, onDeleteClick }) => {
+const TableToolBar = ({ productId, numSelected, onDeleteClick }) => {
+
+  useEffect(() => {
+    console.log(productId)
+  })
+
   return (
     <Toolbar
       sx={{
@@ -113,11 +118,13 @@ const TableToolBar = ({ numSelected, onDeleteClick }) => {
           {numSelected > 0 ? (
               numSelected == 1 ? (
                 <>
-                  <Tooltip title="Mettre à jour">
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
+                  <LinkContainer to={`/admin/products/update/${productId}`}>
+                    <Tooltip title="Mettre à jour">
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </LinkContainer>
                   <Tooltip title="Supprimer">
                     <IconButton onClick={onDeleteClick}>
                       <DeleteIcon />
@@ -266,6 +273,7 @@ const ProductListScreen = () => {
       ) : (
         <>
           <TableToolBar
+            productId={selected[0]}
             numSelected={selected.length}
             onDeleteClick={handleDeleteClick}
           />

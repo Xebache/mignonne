@@ -33,6 +33,7 @@ const Router = () => {
       <Route path="/password" element={<PasswordRecoveryScreen />} />
       <Route path="/admin/products" element={<RequireAdminAuth><ProductListScreen /></RequireAdminAuth>} />
       <Route path="/admin/products/create" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
+      <Route path="/admin/products/update/:id" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
       <Route path="/admin/orders" element={<RequireAdminAuth><OrderListScreen /></RequireAdminAuth>} />
       <Route path="/profile" element={<RequireAuth><ProfileScreen /></RequireAuth>} />
       <Route path="/product/:id" element={<ProductScreen />} />

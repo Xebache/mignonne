@@ -80,3 +80,9 @@ def deleteProduct(request, pk):
     product = Product.objects.get(id=pk)
     product.delete()
     return Response('product deleted')
+
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+    product_id = data['product_id']
+    product = Product.objects.get(id=product_id)
