@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategories, listCollections } from "../../actions/filterActions";
-import { createProduct } from "../../actions/productActions";
+import { createProduct, updateProduct, uploadProductImage, deleteProductImage } from "../../actions/productActions";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -17,15 +18,28 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
 import { BlackCard } from "../customMaterials/Card";
 import { MyTextField } from "../customMaterials/Inputs";
 import { CloseIcon } from "../customMaterials/Icons";
 import Autocomplete from "@mui/material/Autocomplete";
 
+import Loader from "../customMaterials/Loader";
+
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 const ProductForm = ({ product }) => {
+  const[initialValues, setInitialValues] = useState({
+    name: "", 
+    description: "", 
+    price: "", 
+    quantityInStock: "", 
+    category: null, 
+    collection: null, 
+    images: []
+  });
+
   const dispatch = useDispatch();
 
   const categoryList = useSelector((state) => state.categoryList);
@@ -34,36 +48,57 @@ const ProductForm = ({ product }) => {
   const collectionList = useSelector((state) => state.collectionList);
   const { collections } = collectionList;
 
+  const productUploadImage = useSelector((state) => state.productUploadImage);
+  const { loading, error, image: uploadedImage } = productUploadImage;
+
+  useEffect(()=> {
+    if(product) setInitialValues({...product})
+  }, [product])
+
   useEffect(() => {
     dispatch(listCategories());
     dispatch(listCollections());
   }, []);
 
+  useEffect(() => {
+    if(uploadedImage){
+      product.images.push(uploadedImage);
+      setInitialValues({...initialValues, images: product.images});
+    }
+  }, [uploadedImage]);
+
   const submitHandler = (data, resetForm) => {
     // dispatch(createProduct(data));
     // resetForm();
     console.log(data);
-    console.log();
+    dispatch(updateProduct(data));
   };
 
-  const handleUpload = (e) => {
-    console.log("uploading...")
+  const uploadImageHandler = (e) => {
+    if(product){
+      const formData = new FormData();
+      formData.append("product_id", product.id);
+      formData.append("image", e.target.files[0]);
+      dispatch(uploadProductImage(formData));
+    }
   }
 
   return (
     <BlackCard>
       <Formik
-        initialValues={{
-          name: product && product.name ? product.name : "",
-          description:
-            product && product.description ? product.description : "",
-          price: product && product.price ? product.price : "",
-          quantityInStock:
-            product && product.quantityInStock ? product.quantityInStock : "",
-          category: null,
-          collection: null,
-          images: product && product.images ? product.images : [],
-        }}
+        initialValues={ initialValues }
+        //   {
+        //   name: product && product.name ? product.name : "",
+        //   description:
+        //     product && product.description ? product.description : "",
+        //   price: product && product.price ? product.price : "",
+        //   quantityInStock:
+        //     product && product.quantityInStock ? product.quantityInStock : "",
+        //   category: null,
+        //   collection: null,
+        //   images: product && product.images ? product.images : [],
+        // }
+      // }
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);
           submitHandler(values, actions.resetForm);
@@ -76,7 +111,7 @@ const ProductForm = ({ product }) => {
               sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
             >
               <Col xs={12} md={6} className="d-flex flex-row flex-wrap px-2">
-                {values.images.map((image, index) => {
+                {values.images && values.images.map((image, index) => {
                   const name = `images[${index}].isMain`;
                   return (
                     <Box
@@ -84,7 +119,7 @@ const ProductForm = ({ product }) => {
                       display={"flex"}
                       flexDirection={"column"}
                       order={image.isMain ? -1 : ""}
-                      width={image.isMain ? "100%" : "20%"}
+                      width={image.isMain ? "100%" : "7rem"}
                       border={"1px solid #afafaf"}
                       borderRadius={"5px"}
                       padding={"1rem"}
@@ -96,13 +131,16 @@ const ProductForm = ({ product }) => {
                         marginRight={"-.7rem"}
                         marginTop={"-.7rem"}
                       >
-                        <IconButton
-                          onClick={() =>
-                            setFieldValue("images", values.images.filter((image) => image !== values.images[index]))
-                          }
-                        >
-                          <CloseIcon />
-                        </IconButton>
+                        <Tooltip title="Supprimer">
+                          <IconButton
+                            onClick={() => {
+                              setFieldValue("images", values.images.filter((image) => image !== values.images[index]))
+                              dispatch(deleteProductImage(image.id));
+                            }}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                        </Tooltip>
                       </Box>
                       <Image
                         src={image.path}
@@ -110,26 +148,31 @@ const ProductForm = ({ product }) => {
                         style={{ maxHeight: image.isMain ? "20rem" : "auto", minHeight: image.isMain ? "auto" : "5rem", width: image.isMain ? "auto" : "5rem", objectFit: "cover" }}
                         fluid
                       />
-                      <Checkbox
-                        sx={{ "&.MuiCheckbox-root .MuiSvgIcon-root": { fill: "#afafaf" } }}
-                        name={name}
-                        checked={values.images[index].isMain}
-                        onChange={() => { 
-                          values.images.map((img, idx) => (img.isMain = idx === index ? true : false));
-                          setFieldValue("images[index].isMain", true);
-                        }}
-                      />
+                      <Tooltip title="Image principale">
+                        <Checkbox
+                          sx={{ "&.MuiCheckbox-root .MuiSvgIcon-root": { fill: "#afafaf" } }}
+                          name={name}
+                          checked={values.images[index].isMain}
+                          onChange={() => { 
+                            values.images.map((img, idx) => (img.isMain = idx === index ? true : false));
+                            setFieldValue("images[index].isMain", true);
+                          }}
+                        />
+                      </Tooltip>
                     </Box>
                   );
                 })}
                 <TextField
+                  id="file"
+                  name="file"
                   variant="outlined"
                   label=""
                   className="w-100 mt-2"
                   style={{marginLeft: ".4rem"}}
                   type="file"
-                  onChange={(e) => handleUpload(e)}
+                  onChange={uploadImageHandler}
                 />
+                {loading && <Loader/>}
               </Col>
               <Col xs={12} md={6} className="mt-2">
                 <MyTextField
@@ -137,7 +180,7 @@ const ProductForm = ({ product }) => {
                   name="name"
                   id="name"
                   label="Nom"
-                  value={values.name}
+                  value={values.name ? values.name : ""}
                   type="text"
                   helperText={errors.name && touched.name ? errors.name : " "}
                   error={errors.name && touched.name ? true : false}
@@ -151,7 +194,7 @@ const ProductForm = ({ product }) => {
                   name="description"
                   id="description"
                   label="Description"
-                  value={values.description}
+                  value={values.description ? values.description : ""}
                   type="text"
                   helperText={ errors.description && touched.description ? errors.description : " " }
                   error={ errors.description && touched.description ? true : false }
@@ -168,7 +211,7 @@ const ProductForm = ({ product }) => {
                     name="price"
                     id="price"
                     label="Prix"
-                    value={values.price}
+                    value={values.price ? values.price : 0}
                     type="number"
                     step="any"
                     helperText={ errors.price && touched.price ? errors.price : " " }
@@ -181,7 +224,7 @@ const ProductForm = ({ product }) => {
                     name="quantityInStock"
                     id="quantityInStock"
                     label="Quantité"
-                    value={values.quantityInStock}
+                    value={values.quantityInStock ? values.quantityInStock : 0}
                     type="number"
                     helperText={ errors.quantityInStock && touched.quantityInStock ? errors.quantityInStock : " " }
                     error={ errors.quantityInStock && touched.quantityInStock ? true : false }
@@ -207,7 +250,7 @@ const ProductForm = ({ product }) => {
                         {...params}
                         sx={{ width: "10rem", marginRight: "1rem", marginBottom: "1rem" }}
                         label="Catégorie"
-                        value={values.category}
+                        value={values.category ? values.category : null}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (
@@ -229,7 +272,7 @@ const ProductForm = ({ product }) => {
                         {...params}
                         sx={{ width: "10rem" }}
                         label="Collection"
-                        value={values.collection}
+                        value={values.collection ? values.collection : null}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (

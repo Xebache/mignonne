@@ -6,7 +6,7 @@ import uuid
 
 class Category(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.name
@@ -14,7 +14,23 @@ class Category(models.Model):
 
 class Collection(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Color(models.Model):
+    href = models.CharField(max_length=7, null=False, blank=False)
+    id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self) -> str:
+        return self.href
+
+
+class Mood(models.Model):
+    name = models.CharField(max_length=200, null=False, blank=False)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.name
@@ -24,7 +40,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     price = models.DecimalField(
-        max_digits=4, decimal_places=2, null=False, blank=False)
+        max_digits=4, decimal_places=2)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
     collection = models.ForeignKey(
@@ -37,16 +53,15 @@ class Product(models.Model):
         return self.name
 
 
-
 class Image(models.Model):
     product = models.ForeignKey(
         Product, related_name='images', on_delete=models.CASCADE, null=True)
     path = models.ImageField(null=True, blank=True, default='/default.webp')
     isMain = models.BooleanField(default=True, null=False, blank=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
-        return str(self.path)
+        return str(self.id) + " " + str(self.path)
 
     def clean(self):
         if self.isMain:
@@ -92,7 +107,7 @@ class OrderProduct(models.Model):
         return self.name
 
 
-class ShippingAddress(models.Model):
+class Address(models.Model):
     order = models.OneToOneField(
         Order, on_delete=models.CASCADE, null=False, blank=False)
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=False)
@@ -102,24 +117,8 @@ class ShippingAddress(models.Model):
     postalCode = models.CharField(max_length=20, null=False, blank=False)
     city = models.CharField(max_length=50, null=False, blank=False)
     country = models.CharField(max_length=50, null=False, blank=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
         return self.address
 
-
-class BillingAddress(models.Model):
-    sameAsShipping = models.BooleanField(default=True, null=False, blank=False)
-    order = models.OneToOneField(
-        Order, on_delete=models.CASCADE, null=False, blank=False)
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=False)
-    address = models.CharField(max_length=200, null=False, blank=False)
-    number = models.IntegerField(null=False, blank=False)
-    box = models.IntegerField(null=True, blank=True)
-    postalCode = models.CharField(max_length=20, null=False, blank=False)
-    city = models.CharField(max_length=50, null=False, blank=False)
-    country = models.CharField(max_length=50, null=False, blank=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-
-    def __str__(self) -> str:
-        return self.address

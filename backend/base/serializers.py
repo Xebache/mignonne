@@ -57,16 +57,27 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class CategoryIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id']
+
+
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
         fields = ['id', 'name']
 
+class CollectionIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = ['id']
+
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True, read_only=True)
-    category = serializers.StringRelatedField()
-    collection = serializers.StringRelatedField()
+    category = CategoryIDSerializer(many=False, read_only=True)['id']
+    collection = CollectionIDSerializer(many=False, read_only=True)['id']
     createdAt = serializers.SerializerMethodField(read_only=True)
 
     class Meta:

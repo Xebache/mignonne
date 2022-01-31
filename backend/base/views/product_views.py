@@ -1,9 +1,11 @@
+from decimal import Decimal
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from base.models import Product, Image, Category, Collection
-from base.serializers import ProductSerializer
+from base.serializers import ProductSerializer, ImageSerializer
 
 
 @api_view(['GET'])
@@ -22,25 +24,19 @@ def getProduct(request, pk):
 @permission_classes([IsAdminUser])
 def updateProduct(request, pk):
     data = request.data
+
+    images = data["images"]
+    for image in images: 
+        updateImage(image)
+
     product = Product.objects.get(id=pk)
-
-    product.name=data['name'],
-    product.description=data['description'],
-    product.price=data['price'],
-    product.category=Category.objects.get(id=data['category']),
-    product.collection=Collection.objects.get(id=data['collection']),
+    product.name=data['name']
+    product.description=data['description']
+    product.price=Decimal(data['price'])
+    product.category=Category.objects.get(id=data['category'])
+    product.collection=Collection.objects.get(id=data['collection'])
     product.quantityInStock=data['quantityInStock']
-
     product.save()
-
-    # UPDATE IMAGES !!!!
-    # if(len(data['images']) > 0):
-    #     for dataImage in data['images']:
-    #         image = Image.objects.create(
-    #             product=product.id,
-    #             path=dataImage.path,
-    #             isMain=dataImage.isMain
-    #         )
 
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
@@ -81,8 +77,31 @@ def deleteProduct(request, pk):
     product.delete()
     return Response('product deleted')
 
+
 @api_view(['POST'])
+# @permission_classes([IsAdminUser])
 def uploadImage(request):
     data = request.data
     product_id = data['product_id']
     product = Product.objects.get(id=product_id)
+    image = Image.objects.create(
+        path=request.FILES.get('image'),
+        product=product,
+        isMain=False
+    )
+    serializer = ImageSerializer(image, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteImage(request, pk):
+    image = Image.objects.get(id=pk)
+    image.delete()
+    return Response('image deleted')
+
+def updateImage(data):
+    image = Image.objects.get(id=data["id"])
+    image.path = data["path"]
+    image.isMain = data["isMain"]
+    image.save()

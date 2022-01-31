@@ -17,6 +17,12 @@ import {
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_RESET,
+  PRODUCT_UPLOAD_IMAGE_REQUEST,
+  PRODUCT_UPLOAD_IMAGE_SUCCESS,
+  PRODUCT_UPLOAD_IMAGE_FAIL,
+  PRODUCT_DELETE_IMAGE_REQUEST,
+  PRODUCT_DELETE_IMAGE_SUCCESS,
+  PRODUCT_DELETE_IMAGE_FAIL,
 } from "../constants/productConstants";
 
 
@@ -98,7 +104,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
   }
 }
 
-export const upateProduct = (product) => async (dispatch, getState) => {
+export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_UPDATE_REQUEST });
     const { userLogin: { currentUser } } = getState();
@@ -108,12 +114,59 @@ export const upateProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${currentUser.token}`,
       },
     };
-    const { data } = await axios.put(`/api/products/update/${product.id}`, product, config);
+    console.log(product)
+    const { data } = await axios.put(`/api/products/update/${product.id}/`, product, config);
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+}
+
+export const uploadProductImage = (file) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_UPLOAD_IMAGE_REQUEST });
+    const { userLogin: { currentUser } } = getState();
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+        Authorization: `Bearer ${currentUser.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/products/upload/`, file, config);
+    dispatch({ type: PRODUCT_UPLOAD_IMAGE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_UPLOAD_IMAGE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+}
+
+export const deleteProductImage = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_DELETE_IMAGE_REQUEST });
+    const { userLogin: { currentUser } } = getState();
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${currentUser.token}`,
+      },
+    };
+    const { data } = await axios.delete(`/api/products/delete/image/${id}/`, config);
+    dispatch({ type: PRODUCT_DELETE_IMAGE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DELETE_IMAGE_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
