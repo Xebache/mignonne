@@ -25,18 +25,20 @@ def getProduct(request, pk):
 def updateProduct(request, pk):
     data = request.data
 
-    images = data["images"]
-    for image in images: 
-        updateImage(image)
+    print("category", data['category']['id'])
 
     product = Product.objects.get(id=pk)
-    product.name=data['name']
-    product.description=data['description']
-    product.price=Decimal(data['price'])
-    product.category=Category.objects.get(id=data['category'])
-    product.collection=Collection.objects.get(id=data['collection'])
-    product.quantityInStock=data['quantityInStock']
+    product.name = data['name']
+    product.description = data['description']
+    product.price = Decimal(data['price'])
+    product.category = Category.objects.get(id=data['category']['id'])
+    product.collection = Collection.objects.get(id=data['collection']['id'])
+    product.quantityInStock = data['quantityInStock']
     product.save()
+
+    images = data["images"]
+    for image in images:
+        updateImage(image)
 
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
@@ -46,26 +48,21 @@ def updateProduct(request, pk):
 @permission_classes([IsAdminUser])
 def createProduct(request):
     data = request.data
+
     product = Product.objects.create(
         name=data['name'],
         description=data['description'],
         price=data['price'],
-        category=Category.objects.get(id=data['category']),
-        collection=Collection.objects.get(id=data['collection']),
+        category=Category.objects.get(id=data['category']['id']),
+        collection=Collection.objects.get(id=data['collection']['id']),
         quantityInStock=data['quantityInStock']
     )
-    # if(len(data['images']) > 0):
-    #     for dataImage in data['images']:
-    #         Image.objects.create(
-    #             product=product.id,
-    #             path=dataImage.path,
-    #             isMain=dataImage.isMain
-    #         )
-    # else:
-    #     Image.objects.create(
-    #         product=product.id,
-    #         isMain=True
-    #     )
+
+    images = data["images"]
+    for image in images:
+        image["product"] = product
+        updateImage(image)
+
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
@@ -84,10 +81,13 @@ def uploadImage(request):
     data = request.data
     product_id = data['product_id']
     product = Product.objects.get(id=product_id)
+    images = product.images.all()
+    print("IMAGES", len(images))
+    isMain = len(images) == 0
     image = Image.objects.create(
         path=request.FILES.get('image'),
         product=product,
-        isMain=False
+        isMain=isMain
     )
     serializer = ImageSerializer(image, many=False)
     return Response(serializer.data)
@@ -100,8 +100,8 @@ def deleteImage(request, pk):
     image.delete()
     return Response('image deleted')
 
+
 def updateImage(data):
     image = Image.objects.get(id=data["id"])
-    image.path = data["path"]
     image.isMain = data["isMain"]
     image.save()

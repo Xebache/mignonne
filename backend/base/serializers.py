@@ -45,22 +45,10 @@ class UserWithTokenSerializer(UserSerializer):
         return str(token.access_token)
 
 
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ['id', 'path', 'isMain']
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name']
-
-
-class CategoryIDSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['id']
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -68,16 +56,17 @@ class CollectionSerializer(serializers.ModelSerializer):
         model = Collection
         fields = ['id', 'name']
 
-class CollectionIDSerializer(serializers.ModelSerializer):
+
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Collection
-        fields = ['id']
+        model = Image
+        fields = ['id', 'path', 'isMain']
 
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True, read_only=True)
-    category = CategoryIDSerializer(many=False, read_only=True)['id']
-    collection = CollectionIDSerializer(many=False, read_only=True)['id']
+    category = CategorySerializer(many=False, read_only=True)
+    collection = CollectionSerializer(many=False, read_only=True)
     createdAt = serializers.SerializerMethodField(read_only=True)
 
     class Meta:

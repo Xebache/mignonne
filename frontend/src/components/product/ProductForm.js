@@ -30,13 +30,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 const ProductForm = ({ product }) => {
-  const[initialValues, setInitialValues] = useState({
+  const[productValues, setProductValues] = useState({
     name: "", 
     description: "", 
     price: "", 
     quantityInStock: "", 
-    category: null, 
-    collection: null, 
+    category: {}, 
+    collection: {}, 
     images: []
   });
 
@@ -49,10 +49,20 @@ const ProductForm = ({ product }) => {
   const { collections } = collectionList;
 
   const productUploadImage = useSelector((state) => state.productUploadImage);
-  const { loading, error, image: uploadedImage } = productUploadImage;
+  const { loading, success, image: uploadedImage } = productUploadImage;
 
   useEffect(()=> {
-    if(product) setInitialValues({...product})
+    console.log("hello ???")
+    if(product) setProductValues({...product})
+    else setProductValues({
+      name: "", 
+      description: "", 
+      price: "", 
+      quantityInStock: "", 
+      category: {}, 
+      collection: {}, 
+      images: []
+    })
   }, [product])
 
   useEffect(() => {
@@ -61,17 +71,22 @@ const ProductForm = ({ product }) => {
   }, []);
 
   useEffect(() => {
-    if(uploadedImage){
-      product.images.push(uploadedImage);
-      setInitialValues({...initialValues, images: product.images});
+    if(success){
+      console.log("uploaded")
+      setProductValues({...productValues, images:[ ...productValues.images, uploadedImage]});
     }
-  }, [uploadedImage]);
+  }, [success]);
+
+  useEffect(() => {
+    console.log([productValues.name])
+    console.log(productValues)
+  }, [productValues])
 
   const submitHandler = (data, resetForm) => {
-    // dispatch(createProduct(data));
+    console.log(productValues);
+    // if(product) dispatch(updateProduct(productValues));
+    // else dispatch(createProduct(productValues));
     // resetForm();
-    console.log(data);
-    dispatch(updateProduct(data));
   };
 
   const uploadImageHandler = (e) => {
@@ -83,10 +98,19 @@ const ProductForm = ({ product }) => {
     }
   }
 
+  function validateString(value) {
+    let error;
+    if (!value) error = 'Champ requis';
+    return error;
+  }
+
   return (
     <BlackCard>
       <Formik
-        initialValues={ initialValues }
+        // initialValues={ productValues }
+        initialValues={{
+          [productValues.name]: productValues.name
+        }}
         //   {
         //   name: product && product.name ? product.name : "",
         //   description:
@@ -99,19 +123,27 @@ const ProductForm = ({ product }) => {
         //   images: product && product.images ? product.images : [],
         // }
       // }
+        validationSchema={Yup.object().shape({
+          name: Yup.string().required("Champ requis"),
+          description: Yup.string().required("Champ requis"),
+          price: Yup.number().required("Champ requis"),
+          quantityInStock: Yup.number().required("Champ requis"),
+          file: Yup.mixed().required("Champ requis"),
+
+        })}
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);
-          submitHandler(values, actions.resetForm);
+          submitHandler(actions.resetForm);
         }}
         enableReinitialize={true}
       >
-        {({ values, touched, errors, handleBlur, handleChange, isSubmitting, setFieldValue }) => (
+        {({ touched, errors, handleBlur, isSubmitting, setFieldValue }) => (
           <Form>
             <CardContent
               sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
             >
               <Col xs={12} md={6} className="d-flex flex-row flex-wrap px-2">
-                {values.images && values.images.map((image, index) => {
+                {productValues.images && productValues.images.map((image, index) => {
                   const name = `images[${index}].isMain`;
                   return (
                     <Box
@@ -134,7 +166,7 @@ const ProductForm = ({ product }) => {
                         <Tooltip title="Supprimer">
                           <IconButton
                             onClick={() => {
-                              setFieldValue("images", values.images.filter((image) => image !== values.images[index]))
+                              setProductValues({...productValues, images: productValues.images.filter((i) => i != image)});
                               dispatch(deleteProductImage(image.id));
                             }}
                           >
@@ -152,10 +184,10 @@ const ProductForm = ({ product }) => {
                         <Checkbox
                           sx={{ "&.MuiCheckbox-root .MuiSvgIcon-root": { fill: "#afafaf" } }}
                           name={name}
-                          checked={values.images[index].isMain}
+                          checked={productValues.images[index].isMain}
                           onChange={() => { 
-                            values.images.map((img, idx) => (img.isMain = idx === index ? true : false));
-                            setFieldValue("images[index].isMain", true);
+                            productValues.images.map((img, idx) => (img.isMain = idx === index ? true : false));
+                            setProductValues({...productValues, images: productValues.images});
                           }}
                         />
                       </Tooltip>
@@ -170,7 +202,10 @@ const ProductForm = ({ product }) => {
                   className="w-100 mt-2"
                   style={{marginLeft: ".4rem"}}
                   type="file"
+                  helperText={ errors.file && touched.file ? errors.file : " " }
+                  error={ errors.file && touched.file ? true : false }
                   onChange={uploadImageHandler}
+                  // onBlur={handleBlur}
                 />
                 {loading && <Loader/>}
               </Col>
@@ -180,11 +215,11 @@ const ProductForm = ({ product }) => {
                   name="name"
                   id="name"
                   label="Nom"
-                  value={values.name ? values.name : ""}
+                  value={productValues.name ? productValues.name : ""}
                   type="text"
                   helperText={errors.name && touched.name ? errors.name : " "}
                   error={errors.name && touched.name ? true : false}
-                  onChange={handleChange}
+                  onChange={(e) => setProductValues({...productValues, name: e.target.value}) }
                   onBlur={handleBlur}
                 />
                 <MyTextField
@@ -194,11 +229,11 @@ const ProductForm = ({ product }) => {
                   name="description"
                   id="description"
                   label="Description"
-                  value={values.description ? values.description : ""}
+                  value={productValues.description ? productValues.description : ""}
                   type="text"
                   helperText={ errors.description && touched.description ? errors.description : " " }
                   error={ errors.description && touched.description ? true : false }
-                  onChange={handleChange}
+                  onChange={(e) => setProductValues({...productValues, description: e.target.value}) }
                   onBlur={handleBlur}
                 />
                 <Box
@@ -211,12 +246,12 @@ const ProductForm = ({ product }) => {
                     name="price"
                     id="price"
                     label="Prix"
-                    value={values.price ? values.price : 0}
+                    value={productValues.price ? productValues.price : 0}
                     type="number"
                     step="any"
                     helperText={ errors.price && touched.price ? errors.price : " " }
                     error={errors.price && touched.price ? true : false}
-                    onChange={handleChange}
+                    onChange={(e) => setProductValues({...productValues, price: e.target.value}) }
                     onBlur={handleBlur}
                   />
 
@@ -224,11 +259,11 @@ const ProductForm = ({ product }) => {
                     name="quantityInStock"
                     id="quantityInStock"
                     label="Quantité"
-                    value={values.quantityInStock ? values.quantityInStock : 0}
+                    value={productValues.quantityInStock ? productValues.quantityInStock : 0}
                     type="number"
                     helperText={ errors.quantityInStock && touched.quantityInStock ? errors.quantityInStock : " " }
                     error={ errors.quantityInStock && touched.quantityInStock ? true : false }
-                    onChange={handleChange}
+                    onChange={(e) => setProductValues({...productValues, quantityInStock: e.target.value}) }
                     onBlur={handleBlur}
                   />
                 </Box>
@@ -241,7 +276,7 @@ const ProductForm = ({ product }) => {
                   flexWrap={"wrap"}
                 >
                   <Autocomplete
-                    onChange={(e, value) => { setFieldValue("category", value.id) }}
+                    onChange={(e, value) => setProductValues({...productValues, category: value}) }
                     id="category"
                     options={categories}
                     getOptionLabel={(option) => option.name}
@@ -250,7 +285,7 @@ const ProductForm = ({ product }) => {
                         {...params}
                         sx={{ width: "10rem", marginRight: "1rem", marginBottom: "1rem" }}
                         label="Catégorie"
-                        value={values.category ? values.category : null}
+                        value={productValues.category ? productValues.category : {}}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (
@@ -263,7 +298,7 @@ const ProductForm = ({ product }) => {
                     )}
                   />
                   <Autocomplete
-                    onChange={(e, value) => { setFieldValue("collection", value.id) }}
+                    onChange={(e, value) => setProductValues({...productValues, collection: value}) }
                     id="collection"
                     options={collections}
                     getOptionLabel={(option) => option.name}
@@ -272,7 +307,7 @@ const ProductForm = ({ product }) => {
                         {...params}
                         sx={{ width: "10rem" }}
                         label="Collection"
-                        value={values.collection ? values.collection : null}
+                        value={productValues.collection ? productValues.collection : {}}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (
@@ -287,7 +322,7 @@ const ProductForm = ({ product }) => {
                 </Box>
               </Col>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{display: "flex", justifyContent: "center"}}>
               <Button
                 type="submit"
                 variant="outlined"
