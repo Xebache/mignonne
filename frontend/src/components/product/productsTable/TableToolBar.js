@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -8,13 +8,37 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-const TableToolBar = ({ productId, numSelected, onDeleteClick }) => {
+import Filters from "../Filters";
+import { BlackFilterDialog } from "../../customMaterials/Dialog";
+import { CloseIcon } from "../../customMaterials/Icons";
 
+const FilterDialog = ({ filter, setFilter }) => {
+  const [open, setOpen] = useState(false);
+
+  const openFilterDialog = () => {
+    setOpen(true);
+  };
+
+  return (
+    <Fragment>
+      <Tooltip title="Filtres">
+        <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
+      <BlackFilterDialog open={open} onClose={() => setOpen(false)}>
+        <Filters filter={filter} setFilter={setFilter} />
+      </BlackFilterDialog>
+    </Fragment>
+  );
+};
+
+const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter }) => {
   return (
     <Toolbar
       sx={{
@@ -84,11 +108,12 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick }) => {
                   </IconButton>
                 </Tooltip>
               </LinkContainer>
-              <Tooltip title="Filtres">
+              {/* <Tooltip title="Filtres">
                 <IconButton sx={{ marginBottom: "1rem" }}>
                   <FilterListIcon />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
+              <FilterDialog filter={filter} setFilter={setFilter} />
             </>
           )}
         </Box>

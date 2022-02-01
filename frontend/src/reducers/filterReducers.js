@@ -38,3 +38,4 @@ export const collectionListReducer = (state = { collections: [] }, action) => {
       return state;
   }
 };
+

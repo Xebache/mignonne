@@ -53,7 +53,7 @@ const User = ({ user }) => {
     setOpen(true);
   };
 
-  return(
+  return (
     <>
     {user ? (
       <Fragment>

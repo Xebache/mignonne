@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategories, listCollections } from "../../actions/filterActions";
@@ -52,7 +51,6 @@ const ProductForm = ({ product }) => {
   const { loading, success, image: uploadedImage } = productUploadImage;
 
   useEffect(()=> {
-    console.log("hello ???")
     if(product) setProductValues({...product})
     else setProductValues({
       name: "", 
