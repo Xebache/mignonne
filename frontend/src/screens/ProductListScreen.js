@@ -17,7 +17,7 @@ import CollapsibleRow from "../components/product/productsTable/CollapsibleRow";
 import TableHeadWithSorting from "../components/product/productsTable/TableHeadWithSorting";
 import TableToolBar from "../components/product/productsTable/TableToolBar";
 
-import Filters from "../components/product/Filters";
+import Filters from "../components/filter/Filters";
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -32,23 +32,38 @@ const getComparator = (order, orderBy) => {
 };
 
 const multiPropsFilter = (products, filter) => {
-  const selectedCategories = products.filter((product) => {
-    return filter.categories.some((c) => product.category.name === c);
-  });
-  const selectedCollections = products.filter((product) => {
-    return filter.collections.some((c) => product.collection.name === c);
-  });
-  const res = [...new Set([...selectedCategories, ...selectedCollections])];
-  return filter.categories.length == 0 && filter.collections.length == 0
-    ? products
-    : res;
+  let selectedCategories = products;
+  if (filter.categories.length > 0)
+    selectedCategories = products.filter((product) =>
+      filter.categories.map((c) => c.name).includes(product.category.name)
+    );
+
+  let selectedCollections = products;
+  if (filter.collections.length > 0)
+    selectedCollections = products.filter((product) =>
+      filter.collections.map((c) => c.name).includes(product.collection.name)
+    );
+
+  const selectedPriceRange = products.filter(
+    (product) =>
+      parseInt(product.price) >= filter.range.min &&
+      parseInt(product.price) <= filter.range.max
+  );
+
+  return selectedCategories
+    .filter((product) => selectedCollections.includes(product))
+    .filter((product) =>  selectedPriceRange.includes(product))
 };
 
 const ProductListScreen = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
   const [selected, setSelected] = useState([]);
-  const [filter, setFilter] = useState({ categories: [], collections: [] });
+  const [filter, setFilter] = useState({
+    categories: [],
+    collections: [],
+    range: {},
+  });
   const [productsToDisplay, setProductsToDisplay] = useState([]);
 
   const dispatch = useDispatch();
@@ -64,7 +79,13 @@ const ProductListScreen = () => {
   } = productDelete;
 
   useEffect(() => {
+    
     setProductsToDisplay(products);
+    if (products.length > 0) {
+      const max = Math.max(...products.map((product) => product.price));
+      const min = Math.min(...products.map((product) => product.price));
+      setFilter({ ...filter, range: { min: min, max: max } });
+    }
   }, [products]);
 
   useEffect(() => {
@@ -132,6 +153,7 @@ const ProductListScreen = () => {
             onDeleteClick={handleDeleteClick}
             filter={filter}
             setFilter={setFilter}
+            productsToDisplay={productsToDisplay}
           />
           <TableContainer>
             <Table>

@@ -1,0 +1,73 @@
+#priceSlider.noUi-target{
+    width: 70%;
+    margin-left: 7.25rem;
+  }
+  
+  #priceSlider.noUi-horizontal{
+    height: 1px;
+    border: 1px solid #6f6f6f;
+    border-bottom: 1px solid white;
+  }
+  
+  
+  #priceSlider.noUi-horizontal:before {
+    content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      left: -1px;
+      top: -2rem;
+      bottom: 0;
+      border: 1px solid #6f6f6f;
+      border-width: 0 0 0 1px;
+      height: 4rem;
+  }
+  
+  #priceSlider.noUi-horizontal:after {
+    content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      right: -1px;
+      top: -2rem;
+      bottom: 0;
+      border: 1px solid #6f6f6f;
+      border-width: 0 0 0 1px;
+      height: 4rem;
+  }
+  
+  #priceSlider .noUi-connect{
+    background: transparent;
+  }
+  
+  #priceSlider .noUi-handle {
+    border: 1px solid #6f6f6f;
+    border-radius: 3px;
+    box-shadow: none;
+    position: relative;
+    top: -2rem;
+    height: 4rem;
+    width: 4.5rem;
+  }
+  
+  #priceSlider .noUi-handle-lower {
+  
+  }
+  
+  #priceSlider .noUi-handle-upper {
+  
+  }
+  
+  #priceSlider .noUi-handle:before,
+  #priceSlider .noUi-handle:after {
+    background: transparent;
+  }
+  
+  #priceSlider .noUi-tooltip {
+    border: none;
+    background: transparent;
+    position: relative;
+    top: -3rem;
+  }
+  
+  

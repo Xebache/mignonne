@@ -52,6 +52,7 @@ const LoginForm = () => {
             onBlur={handleBlur}
           />
           <MyTextField
+          autoComplete="true"
             className="w-100"
             name="password"
             id="password"

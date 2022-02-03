@@ -13,32 +13,39 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-import Filters from "../Filters";
-import { BlackFilterDialog } from "../../customMaterials/Dialog";
-import { CloseIcon } from "../../customMaterials/Icons";
+import Filters from "../../filter/Filters";
+import { LeftSlidingDialog } from "../../customMaterials/Dialog";
 
-const FilterDialog = ({ filter, setFilter }) => {
+// const FilterDialog = ({ filter, setFilter, productsToDisplay }) => {
+//   const [open, setOpen] = useState(false);
+
+//   const openFilterDialog = () => {
+//     setOpen(true);
+//   };
+
+//   return (
+//     <Fragment>
+//       <Tooltip title="Filtres">
+//         <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
+//           <FilterListIcon />
+//         </IconButton>
+//       </Tooltip>
+//       <LeftSlidingDialog 
+//         open={open} 
+//         onClose={() => setOpen(false)}
+//         closeDialog={() => setOpen(false)}>
+//         <Filters filter={filter} setFilter={setFilter} productsToDisplay={productsToDisplay} />
+//       </LeftSlidingDialog>
+//     </Fragment>
+//   );
+// };
+
+const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter, productsToDisplay }) => {
   const [open, setOpen] = useState(false);
 
   const openFilterDialog = () => {
     setOpen(true);
   };
-
-  return (
-    <Fragment>
-      <Tooltip title="Filtres">
-        <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
-      <BlackFilterDialog open={open} onClose={() => setOpen(false)}>
-        <Filters filter={filter} setFilter={setFilter} />
-      </BlackFilterDialog>
-    </Fragment>
-  );
-};
-
-const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter }) => {
   return (
     <Toolbar
       sx={{
@@ -108,12 +115,17 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
                   </IconButton>
                 </Tooltip>
               </LinkContainer>
-              {/* <Tooltip title="Filtres">
-                <IconButton sx={{ marginBottom: "1rem" }}>
+              <Tooltip title="Filtres">
+                <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
                   <FilterListIcon />
                 </IconButton>
-              </Tooltip> */}
-              <FilterDialog filter={filter} setFilter={setFilter} />
+              </Tooltip>
+              <Filters 
+                filter={filter} 
+                setFilter={setFilter} 
+                productsToDisplay={productsToDisplay}
+                open={open} close={() => setOpen(false)}
+              />
             </>
           )}
         </Box>
