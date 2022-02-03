@@ -5,10 +5,8 @@ import { listCategories, listCollections } from "../../actions/filterActions";
 import { createProduct, updateProduct, uploadProductImage, deleteProductImage } from "../../actions/productActions";
 
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 
-import Radio from "@mui/material/Radio";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
@@ -164,7 +162,7 @@ const ProductForm = ({ product }) => {
                         <Tooltip title="Supprimer">
                           <IconButton
                             onClick={() => {
-                              setProductValues({...productValues, images: productValues.images.filter((i) => i != image)});
+                              setProductValues({...productValues, images: productValues.images.filter((i) => i !== image)});
                               dispatch(deleteProductImage(image.id));
                             }}
                           >

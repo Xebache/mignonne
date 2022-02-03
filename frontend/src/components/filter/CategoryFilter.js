@@ -15,13 +15,13 @@ const CategoryFilter = ({ filter, setFilter }) => {
 
   useEffect(() => {
     dispatch(listCategories());
-  }, []);
+  }, [dispatch]);
 
   const handleCategoryClick = (category) => {
     if (filter.categories.includes(category))
       setFilter({
         ...filter,
-        categories: filter.categories.filter((c) => c != category),
+        categories: filter.categories.filter((c) => c !== category),
       });
     else
       setFilter({

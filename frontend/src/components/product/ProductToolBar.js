@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -13,43 +13,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-import Filters from "../../filter/Filters";
-import { LeftSlidingDialog } from "../../customMaterials/Dialog";
+import Filters from "../filter/Filters";
 
-// const FilterDialog = ({ filter, setFilter, productsToDisplay }) => {
-//   const [open, setOpen] = useState(false);
-
-//   const openFilterDialog = () => {
-//     setOpen(true);
-//   };
-
-//   return (
-//     <Fragment>
-//       <Tooltip title="Filtres">
-//         <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
-//           <FilterListIcon />
-//         </IconButton>
-//       </Tooltip>
-//       <LeftSlidingDialog 
-//         open={open} 
-//         onClose={() => setOpen(false)}
-//         closeDialog={() => setOpen(false)}>
-//         <Filters filter={filter} setFilter={setFilter} productsToDisplay={productsToDisplay} />
-//       </LeftSlidingDialog>
-//     </Fragment>
-//   );
-// };
-
-const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter, productsToDisplay }) => {
+const ProductToolBar = ({ selected, filter, setFilter, productsToDisplay, handleDeleteClick }) => {
   const [open, setOpen] = useState(false);
 
   const openFilterDialog = () => {
     setOpen(true);
   };
+
   return (
     <Toolbar
       sx={{
-        ...(numSelected > 0 && {
+        ...(selected.length > 0 && {
           bgcolor: (theme) =>
             alpha(
               theme.palette.primary.main,
@@ -60,7 +36,7 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
     >
       <Box display={"flex"} justifyContent={"space-between"} width={"100%"}>
         <Box>
-          {numSelected > 0 ? (
+          {selected.length > 0 ? (
             <h2
               style={{
                 fontWeight: "300",
@@ -68,8 +44,8 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
                 marginTop: ".5rem",
               }}
             >
-              X {numSelected}{" "}
-              {numSelected === 1
+              X {selected.length}{" "}
+              {selected.length === 1
                 ? "produit sélectionné"
                 : "produits sélectionnés"}
             </h2>
@@ -83,10 +59,10 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
           )}
         </Box>
         <Box>
-          {numSelected > 0 ? (
-            numSelected == 1 ? (
+          {selected.length > 0 ? (
+            selected.length === 1 ? (
               <>
-                <LinkContainer to={`/admin/products/update/${productId}`}>
+                <LinkContainer to={`/admin/products/update/${selected[0]}`}>
                   <Tooltip title="Mettre à jour">
                     <IconButton>
                       <EditIcon />
@@ -94,14 +70,14 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
                   </Tooltip>
                 </LinkContainer>
                 <Tooltip title="Supprimer">
-                  <IconButton onClick={onDeleteClick}>
+                  <IconButton onClick={handleDeleteClick}>
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
               </>
             ) : (
               <Tooltip title="Supprimer">
-                <IconButton onClick={onDeleteClick}>
+                <IconButton onClick={handleDeleteClick}>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
@@ -116,15 +92,19 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
                 </Tooltip>
               </LinkContainer>
               <Tooltip title="Filtres">
-                <IconButton sx={{ marginBottom: "1rem" }} onClick={openFilterDialog}>
+                <IconButton
+                  sx={{ marginBottom: "1rem" }}
+                  onClick={openFilterDialog}
+                >
                   <FilterListIcon />
                 </IconButton>
               </Tooltip>
-              <Filters 
-                filter={filter} 
-                setFilter={setFilter} 
+              <Filters
+                filter={filter}
+                setFilter={setFilter}
                 productsToDisplay={productsToDisplay}
-                open={open} close={() => setOpen(false)}
+                open={open}
+                close={() => setOpen(false)}
               />
             </>
           )}
@@ -134,4 +114,4 @@ const TableToolBar = ({ productId, numSelected, onDeleteClick, filter, setFilter
   );
 };
 
-export default TableToolBar;
+export default ProductToolBar;

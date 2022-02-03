@@ -15,13 +15,13 @@ const CollectionFilter = ({ filter, setFilter }) => {
 
   useEffect(() => {
     dispatch(listCollections());
-  }, []);
+  }, [dispatch]);
 
   const handleCollectionClick = (collection) => {
     if (filter.collections.includes(collection))
       setFilter({
         ...filter,
-        collections: filter.collections.filter((c) => c != collection),
+        collections: filter.collections.filter((c) => c !== collection),
       });
     else
       setFilter({
