@@ -81,7 +81,7 @@ export const updateCategory = (category) => async (dispatch, getState) => {
         Authorization: `Bearer ${currentUser.token}`,
       },
     };
-    const { data } = await axios.post(`/api/filters/categories/update/${category.id}/`, category, config);
+    const { data } = await axios.put(`/api/filters/categories/update/${category.id}/`, category, config);
     dispatch({ type: CATEGORY_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -150,7 +150,7 @@ export const updateCollection = (collection) => async (dispatch, getState) => {
         Authorization: `Bearer ${currentUser.token}`,
       },
     };
-    const { data } = await axios.post(`/api/filters/collections/update/${collection.id}/`, collection, config);
+    const { data } = await axios.put(`/api/filters/collections/update/${collection.id}/`, collection, config);
     dispatch({ type: COLLECTION_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

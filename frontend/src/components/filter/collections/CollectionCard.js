@@ -15,8 +15,15 @@ const CollectionCard = () => {
   const [selected, setSelected] = useState({});
 
   const dispatch = useDispatch();
+
   const collectionList = useSelector((state) => state.collectionList);
   const { collections } = collectionList;
+
+  const collectionUpdate = useSelector((state) => state.collectionUpdate);
+  const { success: successUpdate } = collectionUpdate;
+
+  const collectionCreate = useSelector((state) => state.collectionCreate);
+  const { success: successCreate } = collectionCreate;
 
   useEffect(() => {
     if (collections.length === 0) dispatch(listCollections());
@@ -33,6 +40,10 @@ const CollectionCard = () => {
     resetForm();
     setSelected({})
   };
+
+  useEffect(() => {
+    dispatch(listCollections());
+  }, [successUpdate, successCreate]);
 
   return (
     <Container style={{width: "30rem"}}>

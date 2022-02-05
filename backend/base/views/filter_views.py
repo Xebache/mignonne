@@ -21,9 +21,9 @@ def updateCategory(request, pk):
     serializer = CategorySerializer(category, many=False)
     return Response(serializer.data)
 
-@api_view(['PUT'])
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
-def createCategory(request, pk):
+def createCategory(request):
     data = request.data
     category = Category.objects.create(
         name = data['name']
@@ -47,9 +47,9 @@ def updateCollection(request, pk):
     serializer = CollectionSerializer(collection, many=False)
     return Response(serializer.data)
 
-@api_view(['PUT'])
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
-def createCollection(request, pk):
+def createCollection(request):
     data = request.data
     collection = Collection.objects.create(
         name = data['name']

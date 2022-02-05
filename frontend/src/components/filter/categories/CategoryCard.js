@@ -19,8 +19,15 @@ const CategoryCard = () => {
   const [selected, setSelected] = useState({});
 
   const dispatch = useDispatch();
+
   const categoryList = useSelector((state) => state.categoryList);
   const { categories } = categoryList;
+
+  const categoryUpdate = useSelector((state) => state.categoryUpdate);
+  const { success: successUpdate } = categoryUpdate;
+
+  const categoryCreate = useSelector((state) => state.categoryCreate);
+  const { success: successCreate } = categoryCreate;
 
   useEffect(() => {
     if (categories.length === 0) dispatch(listCategories());
@@ -37,6 +44,10 @@ const CategoryCard = () => {
     resetForm();
     setSelected({})
   };
+
+  useEffect(() => {
+    dispatch(listCategories());
+  }, [successUpdate, successCreate]);
 
   return (
     <Container style={{ width: "30rem" }}>
