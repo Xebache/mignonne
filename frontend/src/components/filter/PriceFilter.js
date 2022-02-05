@@ -8,11 +8,15 @@ const PriceFilter = ({ filter, setFilter }) => {
 
   useEffect(() => {
     if (range.length > 0)
-      setFilter({
-        ...filter,
-        range: { min: parseInt(range[0]), max: parseInt(range[1]) },
-      });
+      setPriceRange();
   }, [range]);
+
+  const setPriceRange = () => {
+    setFilter({
+      ...filter,
+      range: { min: parseInt(range[0]), max: parseInt(range[1]) },
+    });
+  }
 
   return (
     <Box>

@@ -11,6 +11,7 @@ import { withCookies } from "react-cookie";
 
 import CartScreen from "../screens/CartScreen";
 import Error404Screen from "../screens/Error404Screen";
+import FiltersEditScreen from "../screens/FiltersEditScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import OrderListScreen from "../screens/OrderListScreen";
@@ -34,6 +35,7 @@ const Router = () => {
       <Route path="/admin/products" element={<RequireAdminAuth><ProductListScreen /></RequireAdminAuth>} />
       <Route path="/admin/products/create" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
       <Route path="/admin/products/update/:id" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
+      <Route path="/admin/filters" element={<RequireAdminAuth><FiltersEditScreen /></RequireAdminAuth>} />
       <Route path="/admin/orders" element={<RequireAdminAuth><OrderListScreen /></RequireAdminAuth>} />
       <Route path="/profile" element={<RequireAuth><ProfileScreen /></RequireAuth>} />
       <Route path="/product/:id" element={<ProductScreen />} />

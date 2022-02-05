@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { listCollections } from "../../actions/filterActions";
+import { listCollections } from "../../../actions/filterActions";
 
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -14,8 +14,8 @@ const CollectionFilter = ({ filter, setFilter }) => {
   const { collections } = collectionList;
 
   useEffect(() => {
-    dispatch(listCollections());
-  }, [dispatch]);
+    if(collections.length === 0) dispatch(listCollections());
+  }, []);
 
   const handleCollectionClick = (collection) => {
     if (filter.collections.includes(collection))

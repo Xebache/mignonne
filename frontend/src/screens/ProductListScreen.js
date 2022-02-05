@@ -32,11 +32,7 @@ const ProductListScreen = () => {
 
   useEffect(() => {
     setProductsToDisplay(products);
-    if (products.length > 0) {
-      const max = Math.max(...products.map((product) => product.price));
-      const min = Math.min(...products.map((product) => product.price));
-      setFilter({ ...filter, range: { min: min, max: max } });
-    }
+    initPriceFilter();
     setSelected([]);
   }, [products]);
 
@@ -47,6 +43,14 @@ const ProductListScreen = () => {
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch, successDelete]);
+
+  const initPriceFilter = () => {
+    if (products.length > 0) {
+      const max = Math.max(...products.map((product) => product.price));
+      const min = Math.min(...products.map((product) => product.price));
+      setFilter({ ...filter, range: { min: min, max: max } });
+    }
+  }
 
   const handleDeleteClick = () => {
     if (window.confirm("Voulez-vous supprimer ces produits ?")) {

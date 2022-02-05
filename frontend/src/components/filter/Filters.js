@@ -3,8 +3,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { LeftSlidingDialog } from "../customMaterials/Dialog";
 
-import CategoryFilter from "./CategoryFilter";
-import CollectionFilter from "./CollectionFilter";
+import CategoryFilter from "./categories/CategoryFilter";
+import CollectionFilter from "./collections//CollectionFilter";
 import PriceFilter from "./PriceFilter";
 import NumProducts from "./NumProducts";
 

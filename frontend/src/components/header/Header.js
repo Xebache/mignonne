@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -19,7 +19,7 @@ import UserDialog from "./UserDialog";
 const Bag = ({ items }) => {
   return (
     <Fragment>
-    {items.length > 0 ? (
+    {items ? (
       <LinkContainer to="/cart">
         <Nav.Link>
         <Badge 
@@ -109,6 +109,9 @@ const Header = () => {
                       </LinkContainer>
                       <LinkContainer to="/admin/orders">
                         <NavDropdown.Item>Commandes</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/filters">
+                        <NavDropdown.Item>Filtres</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   </Nav>

@@ -89,13 +89,13 @@ const ProductTable = ({
             {productsToDisplay
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .sort(getComparator(order, orderBy))
-              .map((product, index) => {
+              .map((product) => {
                 return (
                   <CollapsibleRow
                     key={product.id}
                     product={product}
                     isItemSelected={isSelected(product.id)}
-                    labelId={`enhanced-table-checkbox-${index}`}
+
                     handleCheckboxClick={(event) =>
                       handleCheckboxClick(event, product.id)
                     }

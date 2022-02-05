@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { listCategories } from "../../actions/filterActions";
+import { listCategories } from "../../../actions/filterActions";
 
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -14,8 +14,8 @@ const CategoryFilter = ({ filter, setFilter }) => {
   const { categories } = categoryList;
 
   useEffect(() => {
-    dispatch(listCategories());
-  }, [dispatch]);
+    if(categories.length === 0) dispatch(listCategories());
+  }, []);
 
   const handleCategoryClick = (category) => {
     if (filter.categories.includes(category))

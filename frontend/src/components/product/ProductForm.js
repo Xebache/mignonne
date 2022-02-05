@@ -62,8 +62,8 @@ const ProductForm = ({ product }) => {
   }, [product])
 
   useEffect(() => {
-    dispatch(listCategories());
-    dispatch(listCollections());
+    if(categories.length === 0) dispatch(listCategories());
+    if(collections.length === 0) dispatch(listCollections());
   }, []);
 
   useEffect(() => {
@@ -139,6 +139,7 @@ const ProductForm = ({ product }) => {
               sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
             >
               <Col xs={12} md={6} className="d-flex flex-row flex-wrap px-2">
+                <Box minHeight={"22.1rem"}>
                 {productValues.images && productValues.images.map((image, index) => {
                   const name = `images[${index}].isMain`;
                   return (
@@ -190,6 +191,7 @@ const ProductForm = ({ product }) => {
                     </Box>
                   );
                 })}
+                </Box>
                 <TextField
                   id="file"
                   name="file"
