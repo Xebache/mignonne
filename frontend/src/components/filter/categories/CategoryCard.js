@@ -50,8 +50,8 @@ const CategoryCard = () => {
   }, [successUpdate, successCreate]);
 
   return (
-    <Container style={{ width: "30rem" }}>
-      <BlackCard>
+
+      <BlackCard style={{ width: "27rem", margin: ".5rem" }} >
         <h2
           className="mb-4"
           style={{ fontWeight: "200", fontSize: "1.5rem", textAlign: "center" }}
@@ -69,7 +69,7 @@ const CategoryCard = () => {
           setSelected={setSelected}
         />
       </BlackCard>
-    </Container>
+
   );
 };
 

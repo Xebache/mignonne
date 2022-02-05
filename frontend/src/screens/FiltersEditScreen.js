@@ -1,18 +1,20 @@
 import React from "react";
 
-import Container from "react-bootstrap/Container";
+import Box from "@mui/material/Box";
 
 import CategoryCard from "../components/filter/categories/CategoryCard";
 import CollectionCard from "../components/filter/collections/CollectionCard";
-
+import ColorCard from "../components/filter/colors/ColorCard";
+import MoodCard from "../components/filter/mood/MoodCard";
 
 const FiltersEditScreen = () => {
-
   return (
-    <Container className="d-flex flex-row flex-wrap">
-      <CategoryCard/>
-      <CollectionCard/>
-    </Container>
+    <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} marginLeft={"2rem"} marginRight={"2rem"}>
+      <CategoryCard />
+      <CollectionCard />
+      <ColorCard />
+      <MoodCard />
+    </Box>
   );
 };
 

@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { listCollections, updateCollection, createCollection } from "../../../actions/filterActions";
 
-import Container from "react-bootstrap/Container";
-
 import { BlackCard } from "../../customMaterials/Card";
 
 import FilterToolBar from "../FilterToolBar";
@@ -46,8 +44,7 @@ const CollectionCard = () => {
   }, [successUpdate, successCreate]);
 
   return (
-    <Container style={{width: "30rem"}}>
-      <BlackCard>
+      <BlackCard style={{ width: "27rem", margin: ".5rem" }} >
         <h2
           className="mb-4"
           style={{ fontWeight: "200", fontSize: "1.5rem", textAlign: "center" }}
@@ -57,7 +54,6 @@ const CollectionCard = () => {
         <FilterToolBar selected={selected} onDeleteClick={onDeleteClick} submitHandler={submitHandler}/>
         <FilterTable filter={collections} selected={selected} setSelected={setSelected}/>
       </BlackCard>
-    </Container>
   );
 };
 

@@ -13,8 +13,8 @@ const FilterForm = ({ filter, submitHandler }) => {
   return (
     <Formik
       initialValues={{
-        id: filter && filter.id ? filter.id : "",
-        name: filter && filter.name ? filter.name : "",
+        id: filter.id || "",
+        name: filter.name || "",
       }}
       onSubmit={(values, actions) => {
         actions.setSubmitting(false);

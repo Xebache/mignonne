@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -20,8 +21,14 @@ class Collection(models.Model):
         return self.name
 
 
+def validate_hex(value):
+    reg = re.compile('^#[a-f0-9]{6}$')
+    if not reg.match(value) :
+        raise ValidationError(u"%s hex n'a pas le bon format" % value)
+
 class Color(models.Model):
-    href = models.CharField(max_length=7, null=False, blank=False)
+    hex = models.CharField(max_length=7, validators =[validate_hex], null=False, blank=False, unique=True, default="#000000")
+    name = models.CharField(max_length=50, null=False, blank=False, default="Noir")
     id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
