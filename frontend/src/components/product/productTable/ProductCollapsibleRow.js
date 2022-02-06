@@ -7,7 +7,11 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
 import Image from "react-bootstrap/Image";
-
+/*
+ * const newProductImages = values.images.filter(i => !i.path);
+ * const formData = new FormData();
+ * formData.setValue('images', JSON.stringify(newProductImages));
+ */
 const CollapsibleRow = ({
   product,
   labelId,
@@ -30,7 +34,7 @@ const CollapsibleRow = ({
         <TableCell align="center" onClick={() => setOpen(!open)}>
           <Image
             src={
-              product.images.find((image) => image.isMain).path
+              product.images.find((image) => image.isMain)?.path
                 ? product.images.find((image) => image.isMain).path
                 : "images/default.webp"
             }

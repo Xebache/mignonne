@@ -6,10 +6,12 @@ import { useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { ButtonOutlinedYellow } from "../customMaterials/Button";
 import { MyTextField } from "../customMaterials/Inputs";
 
-import { Formik, Form } from "formik";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const LoginForm = () => {
@@ -17,66 +19,65 @@ const LoginForm = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const loginHandler = (data, resetForm) => {
-      console.log(state)
-    dispatch(login(data.email, data.password)).then(() => navigate(state?.path || "/"));
-    resetForm();
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Adresse électronique invalide")
+      .required("Champ requis"),
+    password: Yup.string().required("Champ requis"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ resolver: yupResolver(validationSchema) });
+
+  const loginHandler = (data) => {
+    dispatch(login(data.email, data.password)).then(() =>
+      navigate(state?.path || "/")
+    );
+    reset();
   };
 
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      onSubmit={(values, actions) => {
-        actions.setSubmitting(false);
-        loginHandler(values, actions.resetForm);
-      }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email("Adresse électronique invalide")
-          .required("Champ requis"),
-        password: Yup.string().required("champ requis"),
-      })}
-    >
-      {({ values, touched, errors, handleBlur, handleChange, isSubmitting }) => (
-        <Form>
-          <MyTextField
-            className="w-100"
-            name="email"
-            id="email"
-            label="Email"
-            value={values.email}
-            type="email"
-            helperText={errors.email && touched.email ? errors.email : " "}
-            error={errors.email && touched.email ? true : false}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <MyTextField
-          autoComplete="true"
-            className="w-100"
-            name="password"
-            id="password"
-            label="Mot de passe"
-            value={values.password}
-            type="password"
-            helperText={ errors.password && touched.password ? errors.password : " " }
-            error={errors.password && touched.password ? true : false}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <Box className="d-flex justify-content-center">
-            <Button
-              type="submit"
-              variant="outlined"
-              sx={{ "&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
-              disabled={isSubmitting}
-            >
-              Valider
-            </Button>
-          </Box>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit(loginHandler)}>
+      <Box px={3} py={2}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              id="email"
+              name="email"
+              label="Email"
+              {...register("email")}
+              helperText={errors.email?.message}
+              error={errors.email ? true : false}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              type="password"
+              id="password"
+              name="password"
+              label="Mot de passe"
+              autoComplete="on"
+              {...register("password")}
+              helperText={errors.password?.message}
+              error={errors.password ? true : false}
+            />
+          </Grid>
+        </Grid>
+        <Box mt={3} textAlign={"center"}>
+          <ButtonOutlinedYellow>Valider</ButtonOutlinedYellow>
+        </Box>
+      </Box>
+    </form>
   );
 };
 

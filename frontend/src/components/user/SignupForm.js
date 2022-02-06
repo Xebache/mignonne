@@ -4,107 +4,116 @@ import { useDispatch } from "react-redux";
 import { signup } from "../../actions/userActions";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { ButtonOutlinedYellow } from "../customMaterials/Button";
 import { MyTextField } from "../customMaterials/Inputs";
 
-import { Formik, Form } from "formik";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-
 
 const SignupForm = () => {
   const dispatch = useDispatch();
 
-  const createNewUserHandler = (data, resetForm) => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Adresse électronique invalide")
+      .required("Champ requis"),
+    name: Yup.string().required("Champ requis"),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+        "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
+      )
+      .required("champ requis"),
+    confirmPassword: Yup.string()
+      .required("Champ requis")
+      .oneOf(
+        [Yup.ref("password"), null],
+        "Les mots de passe ne correspondent pas"
+      ),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ resolver: yupResolver(validationSchema) });
+
+  const createNewUserHandler = (data) => {
     dispatch(signup(data.name, data.email, data.password));
-    resetForm();
-  }
+    reset();
+  };
 
   return (
-    <Formik
-      initialValues={{ name: "", password: "", confirmPassword: "", email: "" }}
-      onSubmit={(values, actions) => {
-        actions.setSubmitting(false);
-        createNewUserHandler(values, actions.resetForm);
-      }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email("Adresse électronique invalide")
-          .required("Champ requis"),
-        name: Yup.string().required("Champ requis"),
-        password: Yup.string()
-          .matches(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
-            "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
-          )
-          .required("champ requis"),
-        confirmPassword: Yup.string()
-          .required("Champ requis")
-          .oneOf([Yup.ref("password"), null], "Les mots de passe ne correspondent pas"),
-      })}
-    >
-      {({ values, touched, errors, handleBlur, handleChange, isSubmitting }) => (
-        <Form>
-          <MyTextField
-            className="w-100"
-            name="name"
-            id="name"
-            label="Prénom"
-            value={values.name}
-            type="text"
-            helperText={errors.name && touched.name ? errors.name : " "}
-            error={errors.name && touched.name ? true : false}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <MyTextField
-            className="w-100"
-            name="email"
-            id="email"
-            label="Email"
-            value={values.email}
-            type="email"
-            helperText={errors.email && touched.email ? errors.email : " "}
-            error={errors.email && touched.email ? true : false}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <MyTextField
-            className="w-100"
-            name="password"
-            id="password"
-            label="Mot de passe"
-            value={values.password}
-            type="password"
-            helperText={ errors.password && touched.password ? errors.password : " " }
-            error={errors.password && touched.password ? true : false}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <MyTextField
-            className="w-100"
-            name="confirmPassword"
-            id="confirmPassword"
-            label="Confirmez le mot de passe"
-            value={values.confirmPassword}
-            type="password"
-            helperText={ errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : " " }
-            error={ errors.confirmPassword && touched.confirmPassword ? true : false }
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <Box className="d-flex justify-content-center">
-            <Button
-              type="submit"
-              variant="outlined"
-              sx={{ "&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
-              disabled={isSubmitting}
-            >
-              Valider
-            </Button>
-          </Box>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit(createNewUserHandler)}>
+      <Box px={3} py={2}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              type="text"
+              id="name"
+              name="name"
+              label="Prénom"
+              {...register("name")}
+              helperText={errors.name?.message}
+              error={errors.name ? true : false}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              type="email"
+              id="email"
+              name="email"
+              label="Email"
+              {...register("email")}
+              helperText={errors.email?.message}
+              error={errors.email ? true : false}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              type="password"
+              id="password"
+              name="password"
+              label="Mot de passe"
+              autoComplete="on"
+              {...register("password")}
+              helperText={errors.password?.message}
+              error={errors.password ? true : false}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <MyTextField
+              fullWidth
+              margin="dense"
+              required
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              label="Confirmez le mot de passe"
+              autoComplete="on"
+              {...register("confirmPassword")}
+              helperText={errors.confirmPassword?.message}
+              error={errors.confirmPassword ? true : false}
+            />
+          </Grid>
+        </Grid>
+        <Box mt={3} textAlign={"center"}>
+          <ButtonOutlinedYellow>Valider</ButtonOutlinedYellow>
+        </Box>
+      </Box>
+    </form>
   );
 };
 

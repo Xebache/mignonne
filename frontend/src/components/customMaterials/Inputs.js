@@ -5,7 +5,31 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 
+import { Controller } from "react-hook-form";
+
 import theme from "../../styles/Theme";
+
+const CustomInput = ({ control, type, name, label, required, errors }) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <MyTextField
+          fullWidth
+          margin="dense"
+          required={required}
+          type={type}
+          id={name}
+          label={label}
+          helperText={errors.email?.message}
+          error={errors.email ? true : false}
+          {...field}
+        />
+      )}
+    />
+  );
+};
 
 const InputNumber = ({ value, setValue, min, max }) => {
   const decrementQuantity = () => {
@@ -72,4 +96,4 @@ const MyTextField = styled(TextField)({
   },
 });
 
-export { MyTextField, InputNumber };
+export { MyTextField, InputNumber, CustomInput };

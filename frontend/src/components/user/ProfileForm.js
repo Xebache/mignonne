@@ -8,13 +8,16 @@ import Loader from "../customMaterials/Loader";
 import Message from "../customMaterials/Message";
 import { USER_UPDATE_RESET } from "../../constants/userConstants";
 
-import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
+import Grid from "@mui/material/Grid";
+import { ButtonOutlinedYellow } from "../customMaterials/Button";
 import { TransparentCard } from "../customMaterials/Card";
 import { MyTextField } from "../customMaterials/Inputs";
+import { CustomInput } from "../customMaterials/Inputs";
 
-import { Formik, Form } from "formik";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const ProfileForm = () => {
@@ -31,6 +34,50 @@ const ProfileForm = () => {
 
   const navigate = useNavigate();
 
+  const validationSchema = Yup.object().shape(
+    {
+      email: Yup.string()
+        .email("Adresse électronique invalide")
+        .required("Champ requis"),
+      firstname: Yup.string(),
+      password: Yup.string()
+        .notRequired()
+        .when("password", {
+          is: (val) => val?.length,
+          then: (rule) =>
+            rule.matches(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
+              "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
+            ),
+        }),
+      confirmPassword: Yup.string()
+        .when("password", {
+          is: (password) => password,
+          then: Yup.string().required("Champ requis"),
+          otherwise: Yup.string(),
+        })
+        .oneOf(
+          [Yup.ref("password"), null],
+          "Les mots de passe ne correspondent pas"
+        ),
+    },
+    [
+      // !!! Add Cyclic deps here because when require itself
+      ["password", "password"],
+    ]
+  );
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+  } = useForm({
+    defaultValues: { firstname: "", email: "", password: "", confirm: "" },
+    resolver: yupResolver(validationSchema),
+  });
+
   useEffect(() => {
     if (!currentUser) navigate("/login");
     else if (!user || !user.name || success) {
@@ -39,118 +86,81 @@ const ProfileForm = () => {
     }
   }, [currentUser, user, navigate, dispatch, success]);
 
+  useEffect(() => {
+    console.log("reset", user);
+    reset({ ...{ firstname: user.firstname, email: user.email } });
+  }, [user, reset]);
+
   const updateUserHandler = (data) => {
-    dispatch(updateUserProfile({
-      "email": data.email,
-      "name": data.firstname,
-      "password": data.password
-    }))
+    dispatch(
+      updateUserProfile({
+        email: data.email,
+        name: data.firstname,
+        password: data.password,
+      })
+    );
   };
 
   return (
-    <TransparentCard>
-      <Formik
-        initialValues={{
-          firstname: user.name ? user.name : "",
-          lastname: "",
-          password: "",
-          confirmPassword: "",
-          email: user.email ? user.email : "",
-        }}
-        enableReinitialize={true}
-        onSubmit={(values, actions) => {
-          actions.setSubmitting(false);
-          updateUserHandler(values);
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Adresse électronique invalide")
-            .required("Champ requis"),
-          firstname: Yup.string().required("Champ requis"),
-          password: Yup.string().matches(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,20}\S$/,
-            "Le mot de passe doit comporter de 8 à 20 caractères, une majuscule, une minuscule, un caractère spécial et pas d'espace"
-          ),
-          confirmPassword: Yup.string()
-            .when("password", {
-              is: (password) => password,
-              then: Yup.string().required("Champ requis"),
-              otherwise: Yup.string(),
-            })
-            .oneOf(
-              [Yup.ref("password"), null],
-              "Les mots de passe ne correspondent pas"
-            ),
-        })}
-      >
-        {({ values, touched, errors, handleBlur, handleChange, isSubmitting }) => (
-          <Form>
-            <CardContent>
-              {error && <Message variant="danger">{error}</Message>}
-              {loading && <Loader />}
-              <MyTextField
-                className="w-100"
-                name="firstname"
-                id="firstname"
-                label="Prénom + Nom"
-                value={values.firstname}
+    <form onSubmit={handleSubmit(updateUserHandler)}>
+      <TransparentCard>
+        <CardContent px={3} py={2}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={12}>
+              <CustomInput
+                control={control}
                 type="text"
-                helperText={ errors.firstname && touched.firstname ? errors.firstname : " " }
-                error={errors.firstname && touched.firstname ? true : false}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                name="firstname"
+                label="Prénom + Nom"
+                errors={errors}
+                required={false}
               />
-              <MyTextField
-                className="w-100"
-                name="email"
-                id="email"
-                label="Email"
-                value={values.email}
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <CustomInput
+                control={control}
                 type="email"
-                helperText={errors.email && touched.email ? errors.email : " "}
-                error={errors.email && touched.email ? true : false}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                name="email"
+                label="Email"
+                errors={errors}
+                required={false}
               />
+            </Grid>
+            <Grid item xs={12} sm={12}>
               <MyTextField
-                className="w-100"
-                name="password"
+                fullWidth
+                margin="dense"
+                type="password"
                 id="password"
+                name="password"
                 label="Mot de passe"
-                value={values.password}
-                type="password"
-                helperText={errors.password && touched.password ? errors.password : " " }
-                error={errors.password && touched.password ? true : false}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                autoComplete="on"
+                {...register("password")}
+                helperText={errors.password?.message}
+                error={errors.password ? true : false}
               />
+            </Grid>
+            <Grid item xs={12} sm={12}>
               <MyTextField
-                className="w-100"
-                name="confirmPassword"
-                id="confirmPassword"
-                label="Confirmez le mot de passe"
-                value={values.confirmPassword}
+                fullWidth
+                margin="dense"
                 type="password"
-                helperText={ errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : " " }
-                error={ errors.confirmPassword && touched.confirmPassword? true : false }
-                onChange={handleChange}
-                onBlur={handleBlur}
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirmez le mot de passe"
+                autoComplete="on"
+                {...register("confirmPassword")}
+                helperText={errors.confirmPassword?.message}
+                error={errors.confirmPassword ? true : false}
               />
-            </CardContent>
-            <CardActions className="justify-content-center flex-column">
-              <Button
-                type="submit"
-                variant="outlined"
-                sx={{ "&.MuiButton-outlined": { color: "#bc9105", borderColor: "#bc9105", fontWeight: "400" } }}
-                disabled={isSubmitting}
-              >
-                Mettre à jour
-              </Button>
-            </CardActions>
-          </Form>
-        )}
-      </Formik>
-    </TransparentCard>
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardActions className="justify-content-center flex-column">
+          <ButtonOutlinedYellow>Mettre à jour</ButtonOutlinedYellow>
+        </CardActions>
+      </TransparentCard>
+    </form>
   );
 };
 
