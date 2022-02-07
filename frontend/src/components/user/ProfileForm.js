@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import { ButtonOutlinedYellow } from "../customMaterials/Button";
 import { TransparentCard } from "../customMaterials/Card";
 import { MyTextField } from "../customMaterials/Inputs";
-import { CustomInput } from "../customMaterials/Inputs";
+import { ControlledTextField } from "../customMaterials/Inputs";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -107,7 +107,7 @@ const ProfileForm = () => {
         <CardContent px={3} py={2}>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
-              <CustomInput
+              <ControlledTextField
                 control={control}
                 type="text"
                 name="firstname"
@@ -117,7 +117,7 @@ const ProfileForm = () => {
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <CustomInput
+              <ControlledTextField
                 control={control}
                 type="email"
                 name="email"

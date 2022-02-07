@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -9,7 +10,14 @@ import { Controller } from "react-hook-form";
 
 import theme from "../../styles/Theme";
 
-const CustomInput = ({ control, type, name, label, required, errors }) => {
+const ControlledTextField = ({
+  control,
+  type,
+  name,
+  label,
+  required,
+  errors,
+}) => {
   return (
     <Controller
       name={name}
@@ -30,6 +38,59 @@ const CustomInput = ({ control, type, name, label, required, errors }) => {
     />
   );
 };
+
+const ControlledTextArea = ({
+  control,
+  type,
+  name,
+  label,
+  required,
+  errors,
+}) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <MyTextField
+          multiline
+          rows={5}
+          fullWidth
+          margin="dense"
+          required={required}
+          type={type}
+          id={name}
+          label={label}
+          helperText={errors.email?.message}
+          error={errors.email ? true : false}
+          {...field}
+        />
+      )}
+    />
+  );
+};
+
+const ControlledAutocomplete = ({ options, control, name, label }) => {
+  return (
+    <Controller
+      render={({ field }) => (
+        <Autocomplete
+          {...field}
+          options={options}
+          getOptionLabel={(option) => option.name || ""}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          renderInput={(params) => (
+            <MyTextField {...params} label={label} />
+          )}
+        />
+      )}
+      onChange={([, obj]) => obj.id}
+      name={name}
+      control={control}
+      defaultValue=""
+    />
+  );
+}
 
 const InputNumber = ({ value, setValue, min, max }) => {
   const decrementQuantity = () => {
@@ -77,6 +138,7 @@ const InputNumber = ({ value, setValue, min, max }) => {
 };
 
 const MyTextField = styled(TextField)({
+  ".MuiOutlinedInput-root": { background: "#FFF" },
   "& label.Mui-focused": {
     color: theme.palette.primary.main,
   },
@@ -96,4 +158,4 @@ const MyTextField = styled(TextField)({
   },
 });
 
-export { MyTextField, InputNumber, CustomInput };
+export { MyTextField, InputNumber, ControlledTextField, ControlledTextArea, ControlledAutocomplete };

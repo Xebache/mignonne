@@ -9,6 +9,7 @@ import { PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 import Container from "react-bootstrap/Container";
 
 import ProductForm from "../components/product/ProductForm";
+import ProductFormHooked from "../components/product/ProductFormHooked";
 
 function ProductEditScreen() {
   const productId = useParams().id;
@@ -25,7 +26,8 @@ function ProductEditScreen() {
 
   return (
     <Container>
-      <ProductForm product={ product }/>
+      <ProductFormHooked product={ product }/>
+      {/* <ProductForm product={ product }/> */}
     </Container>
   );
 }
