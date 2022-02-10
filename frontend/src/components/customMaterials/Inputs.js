@@ -70,24 +70,27 @@ const ControlledTextArea = ({
   );
 };
 
-const ControlledAutocomplete = ({ options, control, name, label }) => {
+const ControlledAutocomplete = ({ options, control, name, label, setValue }) => {
   return (
     <Controller
       render={({ field }) => (
         <Autocomplete
           {...field}
-          options={options}
+          onChange={(ev, val) => setValue(name, val)}
+          options={options  || []}
           getOptionLabel={(option) => option.name || ""}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
+          isOptionEqualToValue={(option, value) => {
+            if(value.id)
+              return option.id === value.id
+            return true
+          }}
           renderInput={(params) => (
             <MyTextField {...params} label={label} />
           )}
         />
       )}
-      onChange={([, obj]) => obj.id}
       name={name}
       control={control}
-      defaultValue=""
     />
   );
 }

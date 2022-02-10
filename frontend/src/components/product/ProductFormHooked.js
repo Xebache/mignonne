@@ -112,9 +112,9 @@ const ProductFormHooked = ({ product }) => {
               <ControlledAutocomplete
                 control={control}
                 name="category"
-                options={collections}
+                options={categories}
                 label="Catégorie"
-                onChange={(value) => setValue('category', value)}
+                setValue={setValue}
               />
             </Grid>
             <Grid item xs={6} sm={6}>
@@ -123,6 +123,7 @@ const ProductFormHooked = ({ product }) => {
                 name="collection"
                 options={collections}
                 label="Collection"
+                setValue={setValue}
               />
             </Grid>
           </Grid>
