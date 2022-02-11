@@ -3,8 +3,10 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import Button from "react-bootstrap/Button";
+import Checkbox from "@mui/material/Checkbox";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import Tooltip from "@mui/material/Tooltip";
 
 import { Controller } from "react-hook-form";
 
@@ -70,30 +72,60 @@ const ControlledTextArea = ({
   );
 };
 
-const ControlledAutocomplete = ({ options, control, name, label, setValue }) => {
+const ControlledAutocomplete = ({
+  options,
+  control,
+  name,
+  label,
+  setValue,
+}) => {
   return (
     <Controller
       render={({ field }) => (
         <Autocomplete
           {...field}
           onChange={(ev, val) => setValue(name, val)}
-          options={options  || []}
+          options={options || []}
           getOptionLabel={(option) => option.name || ""}
           isOptionEqualToValue={(option, value) => {
-            if(value.id)
-              return option.id === value.id
-            return true
+            if (value.id) return option.id === value.id;
+            return true;
           }}
-          renderInput={(params) => (
-            <MyTextField {...params} label={label} />
-          )}
+          renderInput={(params) => <MyTextField {...params} label={label} />}
         />
       )}
       name={name}
       control={control}
     />
   );
-}
+};
+
+const ControlledMainImageCheckbox = ({ control, image, watchImages, setValue, index }) => {
+  return (
+    <Controller
+      control={control}
+      render={() => (
+        <Tooltip title="Image principale">
+          <Checkbox
+            sx={{
+              "&.MuiCheckbox-root .MuiSvgIcon-root": {
+                fill: "#afafaf",
+              },
+            }}
+            onChange={(ev, val) => {
+              watchImages.forEach((i) => (i.isMain = false));
+              val === true
+                ? (image.isMain = val)
+                : (watchImages[0].isMain = true);
+              setValue("images", watchImages);
+            }}
+            checked={watchImages[index].isMain}
+          />
+        </Tooltip>
+      )}
+    />
+  );
+};
 
 const InputNumber = ({ value, setValue, min, max }) => {
   const decrementQuantity = () => {
@@ -161,4 +193,11 @@ const MyTextField = styled(TextField)({
   },
 });
 
-export { MyTextField, InputNumber, ControlledTextField, ControlledTextArea, ControlledAutocomplete };
+export {
+  MyTextField,
+  InputNumber,
+  ControlledTextField,
+  ControlledTextArea,
+  ControlledAutocomplete,
+  ControlledMainImageCheckbox,
+};
