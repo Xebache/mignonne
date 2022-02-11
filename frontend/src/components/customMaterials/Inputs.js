@@ -30,8 +30,8 @@ const ControlledTextField = ({
           type={type}
           id={name}
           label={label}
-          helperText={errors.email?.message}
-          error={errors.email ? true : false}
+          helperText={errors.name?.message}
+          error={errors.name ? true : false}
           {...field}
         />
       )}
@@ -61,8 +61,8 @@ const ControlledTextArea = ({
           type={type}
           id={name}
           label={label}
-          helperText={errors.email?.message}
-          error={errors.email ? true : false}
+          helperText={errors.name?.message}
+          error={errors.name ? true : false}
           {...field}
         />
       )}
