@@ -58,13 +58,11 @@ const ProductFormHooked = ({ product }) => {
   });
 
   const {
-    register,
     watch,
     handleSubmit,
     formState: { errors },
     control,
     reset,
-    getValues,
     setValue,
   } = useForm({
     defaultValues: defaultValues,
@@ -73,14 +71,34 @@ const ProductFormHooked = ({ product }) => {
 
   const watchImages = watch("images", []);
 
+  const deleteImage = (image) => {
+    setValue("images", watchImages.filter((i) => i != image));
+  };
+
   const formatImageURL = (image) => {
     if (!image) return "";
     if (image.path) return image.path;
     return URL.createObjectURL(image.file);
   };
 
+  const createFormData = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("quantityInStock", data.quantityInStock);
+    formData.append("category", data.category);
+    formData.append("collection", data.collection);
+    formData.append("images", data.images);
+    return formData;
+  };
+
   const submitHandler = (data) => {
-    console.log(data);
+    console.log(data.name);
+    const formData = createFormData(data);
+    // if (product) dispatch(updateProduct(data));
+    // else dispatch(createProduct(data));
+    // resetForm();
   };
 
   return (
@@ -149,12 +167,13 @@ const ProductFormHooked = ({ product }) => {
               type="file"
               helperText={errors.file?.message}
               error={errors.file ? true : false}
-              onChange={(ev) => {
-                setValue("images", [
-                  ...watchImages,
-                 { file: ev.currentTarget.files[0], isMain: watchImages.length === 0 } ,
-                ]);
-              }}
+              onChange={(ev) => setValue(
+                "images", [...watchImages,{
+                    file: ev.currentTarget.files[0],
+                    isMain: watchImages.length === 0,
+                  },
+                ])
+              }
             />
             {/* {loading && <Loader />} */}
           </Grid>

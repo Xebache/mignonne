@@ -87,7 +87,6 @@ const ProfileForm = () => {
   }, [currentUser, user, navigate, dispatch, success]);
 
   useEffect(() => {
-    console.log("reset", user);
     reset({ ...{ firstname: user.firstname, email: user.email } });
   }, [user, reset]);
 
