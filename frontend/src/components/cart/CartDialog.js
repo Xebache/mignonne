@@ -15,7 +15,6 @@ import { CloseIcon } from "../customMaterials/Icons";
 import ProductCart from "../product/ProductCart";
 import CartTitle from "./CartTitle";
 
-
 const CartDialog = ({ open, onClose, items }) => {
 
   return (

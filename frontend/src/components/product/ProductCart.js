@@ -67,7 +67,7 @@ const ProductCart = ({ product, onClose }) => {
           onClick={(ev) => clickHandler(ev, product)}
         >
           <Box>{product.name}</Box>
-          <Box marginRight={"-.75rem"}>
+          <Box marginRight={"-.75rem"} whiteSpace={"noWrap"}>
             {product.price === Math.floor(product.price)
               ? product.price
               : parseInt(product.price)}
