@@ -11,7 +11,7 @@ import Container from "react-bootstrap/Container";
 import ProductForm from "../components/product/ProductForm";
 import ProductFormHooked from "../components/product/ProductFormHooked";
 
-function ProductEditScreen() {
+function AdminProductFormScreen() {
   const productId = useParams().id;
 
   const dispatch = useDispatch();
@@ -32,4 +32,4 @@ function ProductEditScreen() {
   );
 }
 
-export default ProductEditScreen;
+export default AdminProductFormScreen;

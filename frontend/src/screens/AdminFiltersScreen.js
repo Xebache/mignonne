@@ -7,7 +7,7 @@ import CollectionCard from "../components/filter/collections/CollectionCard";
 import ColorCard from "../components/filter/colors/ColorCard";
 import MoodCard from "../components/filter/mood/MoodCard";
 
-const FiltersEditScreen = () => {
+const AdminFiltersScreen = () => {
   return (
     <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} marginLeft={"2rem"} marginRight={"2rem"}>
       <CategoryCard />
@@ -18,4 +18,4 @@ const FiltersEditScreen = () => {
   );
 };
 
-export default FiltersEditScreen;
+export default AdminFiltersScreen;

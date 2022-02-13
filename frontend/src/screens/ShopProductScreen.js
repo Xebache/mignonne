@@ -21,7 +21,7 @@ import Loader from "../components/customMaterials/Loader";
 import { HandIcon } from "../components/customMaterials/Icons";
 import CartDialog from "../components/cart/CartDialog";
 
-const ProductScreen = () => {
+const ShopProductScreen = () => {
   const [open, setOpen] = useState(false);
   const [leave, setLeave] = useState(false);
 
@@ -187,4 +187,4 @@ const ProductScreen = () => {
   );
 };
 
-export default ProductScreen;
+export default ShopProductScreen;

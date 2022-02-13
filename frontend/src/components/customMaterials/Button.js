@@ -18,6 +18,26 @@ export const ButtonOutlinedYellow = ({ children }) => {
   );
 };
 
+export const ButtonOutlinedDark = ({ children, onClick }) => {
+  return (
+    <Button
+      type="submit"
+      variant="outlined"
+      onClick={onClick}
+      sx={{
+        "&.MuiButton-outlined": {
+          color: "#6f6f6f",
+          borderColor: "#6f6f6f",
+          background: "#ffffff",
+          fontWeight: "400",
+        },
+      }}
+    >
+      {children}
+    </Button>
+  );
+};
+
 export const ButtonNoOutlinedFullWidth = ({ children, disabled }) => {
   return (
     <Button

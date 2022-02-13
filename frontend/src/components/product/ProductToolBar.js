@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-import Filters from "../filter/Filters";
+import FilterDialog from "../filter/FilterDialog";
 
 const ProductToolBar = ({ selected, filter, setFilter, productsToDisplay, handleDeleteClick }) => {
   const [open, setOpen] = useState(false);
@@ -99,7 +99,7 @@ const ProductToolBar = ({ selected, filter, setFilter, productsToDisplay, handle
                   <FilterListIcon />
                 </IconButton>
               </Tooltip>
-              <Filters
+              <FilterDialog
                 filter={filter}
                 setFilter={setFilter}
                 productsToDisplay={productsToDisplay}

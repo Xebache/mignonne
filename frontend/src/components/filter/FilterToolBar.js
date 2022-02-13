@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-import Filters from "../filter/Filters";
+import FilterDialog from "./FilterDialog";
 
 import FilterForm from "../filter/FilterForm";
 

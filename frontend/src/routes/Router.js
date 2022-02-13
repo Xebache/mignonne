@@ -9,21 +9,25 @@ import { useCookies } from "react-cookie";
 
 import { withCookies } from "react-cookie";
 
-import CartScreen from "../screens/CartScreen";
-import Error404Screen from "../screens/Error404Screen";
-import FiltersEditScreen from "../screens/FiltersEditScreen";
 import HomeScreen from "../screens/HomeScreen";
-import LoginScreen from "../screens/LoginScreen";
-import OrderListScreen from "../screens/OrderListScreen";
-import PasswordRecoveryScreen from "../screens/PasswordRecoveryScreen";
+import Error404Screen from "../screens/Error404Screen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
-import ProductListScreen from "../screens/ProductListScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import ProductScreen from "../screens/ProductScreen";
-import SignupScreen from "../screens/SignupScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 
-import ProductEditScreen from "../screens/ProductEditScreen";
+import LoginScreen from "../screens/LoginScreen";
+import SignupScreen from "../screens/SignupScreen";
+import PasswordRecoveryScreen from "../screens/PasswordRecoveryScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+
+import ShopProductScreen from "../screens/ShopProductScreen";
+import ShopMainScreen from "../screens/ShopMainScreen";
+
+import CartScreen from "../screens/CartScreen";
+
+import AdminFiltersScreen from "../screens/AdminFiltersScreen";
+import AdminProductFormScreen from "../screens/AdminProductFormScreen";
+import AdminProductListScreen from "../screens/AdminProductListScreen";
+import AdminOrderListScreen from "../screens/AdminOrderListScreen";
 
 const Router = () => {
   return (
@@ -32,13 +36,14 @@ const Router = () => {
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/signup" element={<SignupScreen />} />
       <Route path="/password" element={<PasswordRecoveryScreen />} />
-      <Route path="/admin/products" element={<RequireAdminAuth><ProductListScreen /></RequireAdminAuth>} />
-      <Route path="/admin/products/create" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
-      <Route path="/admin/products/update/:id" element={<RequireAdminAuth><ProductEditScreen /></RequireAdminAuth>} />
-      <Route path="/admin/filters" element={<RequireAdminAuth><FiltersEditScreen /></RequireAdminAuth>} />
-      <Route path="/admin/orders" element={<RequireAdminAuth><OrderListScreen /></RequireAdminAuth>} />
+      <Route path="/admin/products" element={<RequireAdminAuth><AdminProductListScreen /></RequireAdminAuth>} />
+      <Route path="/admin/products/create" element={<RequireAdminAuth><AdminProductFormScreen /></RequireAdminAuth>} />
+      <Route path="/admin/products/update/:id" element={<RequireAdminAuth><AdminProductFormScreen /></RequireAdminAuth>} />
+      <Route path="/admin/filters" element={<RequireAdminAuth><AdminFiltersScreen /></RequireAdminAuth>} />
+      <Route path="/admin/orders" element={<RequireAdminAuth><AdminOrderListScreen /></RequireAdminAuth>} />
       <Route path="/profile" element={<RequireAuth><ProfileScreen /></RequireAuth>} />
-      <Route path="/product/:id" element={<ProductScreen />} />
+      <Route path="/product/:id" element={<ShopProductScreen />} />
+      <Route path="/shop" element={<ShopMainScreen />} />
       <Route path="/cart" element={<CartScreen />}>
         <Route path=":id/:qty" element={<CartScreen />} />
       </Route>

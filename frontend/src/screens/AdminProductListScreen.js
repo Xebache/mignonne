@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts, deleteProduct } from "../actions/productActions";
 
-import applyFilters from "../components/filter/FilterMethods";
+import applyFilters from "../components/filter/FilterUtils";
 
 import Container from "react-bootstrap/Container";
 
@@ -13,7 +13,7 @@ import Loader from "../components/customMaterials/Loader";
 import ProductTable from "../components/product/productTable/ProductTable";
 import ProductToolBar from "../components/product/ProductToolBar";
 
-const ProductListScreen = () => {
+const AdminProductListScreen = () => {
   const [selected, setSelected] = useState([]);
   const [filter, setFilter] = useState({
     categories: [],
@@ -85,4 +85,4 @@ const ProductListScreen = () => {
   );
 };
 
-export default ProductListScreen;
+export default AdminProductListScreen;
