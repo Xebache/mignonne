@@ -5,13 +5,9 @@ import Message from "../customMaterials/Message";
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import { TransparentCard } from "../customMaterials/Card";
-import { MyTextField } from "../customMaterials/Inputs";
 
 import { ControlledTextField } from "../customMaterials/Inputs";
+import { ButtonOutlinedYellow } from "../customMaterials/Button";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +25,6 @@ const AddressForm = () => {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
@@ -120,7 +115,7 @@ const AddressForm = () => {
                 name="zipcode"
                 label="Code postal"
                 errors={errors}
-                required={false}
+                required={true}
               />
             </Grid>
             <Grid item xs={5} sm={5} style={{ marginLeft: ".5rem", marginRight: ".5rem" }} >
@@ -130,7 +125,7 @@ const AddressForm = () => {
                 name="city"
                 label="Ville"
                 errors={errors}
-                required={false}
+                required={true}
               />
             </Grid>
             <Grid item xs={4} sm={4}>
@@ -140,11 +135,14 @@ const AddressForm = () => {
                 name="country"
                 label="Pays"
                 errors={errors}
-                required={false}
+                required={true}
               />
             </Grid>
           </Grid>
         </Grid>
+        <Box mt={3} textAlign={"center"}>
+          <ButtonOutlinedYellow>Mettre à jour</ButtonOutlinedYellow>
+        </Box>
       </Box>
     </form>
   );

@@ -7,44 +7,64 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-import Badge from '@mui/material/Badge';
+
+import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import { Logo } from "../customMaterials/Logo";
 import { BagIcon, OpenEyeIcon } from "../customMaterials/Icons";
-import UserDialog from "./UserDialog";
-
+import UserDialog from "../user/UserDialog";
+import CartDialog from "../cart/CartDialog";
 
 const Bag = ({ items }) => {
+  const [open, setOpen] = useState(false);
+
+  const openCartDialog = () => {
+    setOpen(true);
+  };
+
   return (
-    <Fragment>
-    {items ? (
-      <LinkContainer to="/cart">
-        <Nav.Link>
-        <Badge 
-          badgeContent={items.length} 
-          sx={{ '& .MuiBadge-badge': {
-            right: 22,
-            top: 30,
-            background: "transparent",
-            border: "1px solid #6f6f6f",
-            color: "#6f6f6f",
-            padding: '0 4px' } }}>
-          <BagIcon color="#bc9105" />
-        </Badge>
-        </Nav.Link>
-      </LinkContainer>
-    ) : (
-      <LinkContainer to="/cart">
-        <Nav.Link>
-          <BagIcon color="#6f6f6f" />
-        </Nav.Link>
-      </LinkContainer>
-    )}
-    </Fragment>
-  )
-}
+    <>
+      {items ? (
+        <Fragment>
+          <Button
+            type="submit"
+            sx={{
+              "&.MuiButton-outlined": {
+                color: "transparent",
+                borderColor: "transparent",
+                height: "3.5rem",
+                marginTop: ".2rem",
+              },
+            }}
+            variant="outlined"
+            onClick={openCartDialog}
+          >
+            <Badge
+              badgeContent={items.length}
+              sx={{
+                "& .MuiBadge-badge": {
+                  right: 22,
+                  top: 30,
+                  background: "transparent",
+                  border: "1px solid #6f6f6f",
+                  color: "#6f6f6f",
+                  padding: "0 4px",
+                },
+              }}
+            >
+              <BagIcon color="#bc9105" />
+            </Badge>
+          </Button>
+          <CartDialog open={open} onClose={() => setOpen(false)} items={items}/>
+        </Fragment>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
 
 const User = ({ user }) => {
   const [open, setOpen] = useState(false);
@@ -55,29 +75,35 @@ const User = ({ user }) => {
 
   return (
     <>
-    {user ? (
-      <Fragment>
-        <Button
-          type="submit"
-          sx={{ "&.MuiButton-outlined": {color: "transparent", borderColor: "transparent", height: "3.5rem", marginTop: ".2rem" } }}
-          variant="outlined"
-          onClick={openUserDialog}
-        >
-          <OpenEyeIcon color="#bc9105" />
-        </Button>
-        <UserDialog open={open} onClose={() => setOpen(false)} user={user} />
-      </Fragment>
-    ) : (
-      <LinkContainer to="/login">
-        <Nav.Link>
-          <OpenEyeIcon color="#6f6f6f" />
-        </Nav.Link>
-      </LinkContainer>
-    )}
+      {user ? (
+        <Fragment>
+          <Button
+            type="submit"
+            sx={{
+              "&.MuiButton-outlined": {
+                color: "transparent",
+                borderColor: "transparent",
+                height: "3.5rem",
+                marginTop: ".2rem",
+              },
+            }}
+            variant="outlined"
+            onClick={openUserDialog}
+          >
+            <OpenEyeIcon color="#bc9105" />
+          </Button>
+          <UserDialog open={open} onClose={() => setOpen(false)} user={user} />
+        </Fragment>
+      ) : (
+        <LinkContainer to="/login">
+          <Nav.Link>
+            <OpenEyeIcon color="#6f6f6f" />
+          </Nav.Link>
+        </LinkContainer>
+      )}
     </>
-  )
-}
-
+  );
+};
 
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -123,7 +149,6 @@ const Header = () => {
               <User user={currentUser} />
             </Box>
           </Box>
-          
         </Container>
       </Navbar>
     </header>

@@ -8,7 +8,8 @@ import Slide from "@mui/material/Slide";
 import { BlackCard } from "./Card";
 import { CloseIcon } from "./Icons";
 
-const BlackDialog = ({ open, onClose, children }) => {
+
+const RightSlidingDialog = ({ open, onClose, children, height, width }) => {
   return (
     <Dialog
       hideBackdrop
@@ -19,7 +20,7 @@ const BlackDialog = ({ open, onClose, children }) => {
       }}
     >
       <Slide direction="left" in={open} mountOnEnter unmountOnExit>
-        <BlackCard style={{ minWidth: "20rem" }} className="p-0">
+        <BlackCard style={{ width: width, height: height }} className="p-0">
           {children}
         </BlackCard>
       </Slide>
@@ -71,4 +72,4 @@ const LeftSlidingDialog = ({ open, onClose, children, closeDialog }) => {
   );
 };
 
-export { BlackDialog, LeftSlidingDialog };
+export { LeftSlidingDialog, RightSlidingDialog };

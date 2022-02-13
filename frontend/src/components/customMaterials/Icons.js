@@ -6,6 +6,11 @@ const SmSvgIcon = styled.svg`
   height: 0.75rem;
 `;
 
+const SSmSvgIcon = styled.svg`
+  width: 0.5rem;
+  height: 0.5rem;
+`;
+
 const SvgIcon = styled.svg`
   width: 3rem;
   height: 3rem;
@@ -158,6 +163,30 @@ const CloseIcon = () => {
   );
 };
 
+const CloseIconWhite = () => {
+  return (
+    <SSmSvgIcon
+      version="1.1"
+      id="close_svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 15 15"
+    >
+      <path
+        stroke="#ffffff"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        d="M 0,0 15,15"
+      />
+      <path
+        stroke="#ffffff"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        d="M 15,0 0,15"
+      />
+    </SSmSvgIcon>
+  );
+};
+
 const ArrowIcon = ({ color }) => {
   return (
     <SvgIcon
@@ -178,4 +207,4 @@ const ArrowIcon = ({ color }) => {
   )
 }
 
-export { BagIcon, UserIcon, OpenEyeIcon, CloseEyeIcon, HandIcon, CloseIcon, ArrowIcon };
+export { BagIcon, UserIcon, OpenEyeIcon, CloseEyeIcon, HandIcon, CloseIcon, CloseIconWhite, ArrowIcon };
